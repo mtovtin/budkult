@@ -1,0 +1,52 @@
+<div class="content-prewrap">
+	<div class="row">
+		<div class="col-md-8 col-sm-8">
+			<ol class="breadcrumb" style="margin-left: 0;">
+				<li><a href="/">На головну</a></li>
+				<li><%== @category.name %></li>
+			</ol>
+			<div class="post-items">
+				<h1 class="inner-post-title tag-title"><%= @category.name %></h1>
+				<div class="docs-filter-wrap">
+					<form action="<%= url_for(action: :doc_tag) %>" method="get" class="cama_ajax_request" autocomplete="off">
+						<span>Відібрати з</span>
+						<input type="text" class="docs-datepicker" name="start_date" value="<%= params[:start_date] %>" placeholder="01/01/2018">
+						<span>по</span>
+						<input type="text" class="docs-datepicker" name="end_date" value="<%= params[:end_date] %>" placeholder="01/01/2020">
+						<button class="cat-naming" type="submit">Фільтрувати</button>
+					</form>
+				</div>
+			</div>
+			<% if @arr_docs && @arr_docs.length > 0 %>
+			<% @arr_docs.sort_by { |a| a.created_at }.reverse.paginate(:page => params[:page], :per_page => current_site.front_per_page).each do |doc| %>
+			<div class="post-item docs-item">
+				<div class="post-item-content">
+					<h3><a href="/rada_docs/show/<%= doc.slug %>"><%== doc.title %></a></h3>
+					<div class="docs-content-bottom">
+						<p class="docs-pubdate">Опубліковано: <%= l(doc.created_at, format: "%d/%m/%Y") %></p>
+						<a class="docs-dl-link" href="<%= doc.rada_docs_url %>" target="_blank" rel="noopener">Завантажити</a>
+					</div>
+				</div>
+			</div>
+			<% end %>
+			<%= raw cama_do_pagination(@arr_docs.sort_by { |a| a.created_at }.reverse.paginate(:page => params[:page], :per_page => current_site.front_per_page), {inner_window: 1, outer_window: 1, previous_label: '<', next_label: '>'} ) %>
+			<% else %>
+			<% @docs.paginate(:page => params[:page], :per_page => current_site.front_per_page).order('created_at desc').each do |doc| %>
+			<div class="post-item docs-item">
+				<div class="post-item-content">
+					<h3><a href="/rada_docs/show/<%= doc.slug %>"><%== doc.title %></a></h3>
+					<div class="docs-content-bottom">
+						<p class="docs-pubdate">Опубліковано: <%= l(doc.created_at, format: "%d/%m/%Y") %></p>
+						<a class="docs-dl-link" href="<%= doc.rada_docs_url %>" target="_blank" rel="noopener">Завантажити</a>
+					</div>
+				</div>
+			</div>
+			<% end %>
+			<%= raw cama_do_pagination(@docs.paginate(:page => params[:page], :per_page => current_site.front_per_page), {inner_window: 1, outer_window: 1, previous_label: '<', next_label: '>'} ) %>
+			<% end %>
+		</div>
+		<div class="col-md-4 col-sm-4">
+			<%= render partial: 'partials/sidebar', locals: {post: @post} %>
+		</div>
+	</div>
+</div>

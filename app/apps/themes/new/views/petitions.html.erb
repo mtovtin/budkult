@@ -1,0 +1,25 @@
+<div class="content-prewrap">
+	<div class="row">
+		<div class="col-md-8 col-sm-8">	
+			<h1><%= @cat %></h1>
+			<br />
+			<div class="post-items">
+				<% @petitions.order('created_at desc').each do |pet| %>
+				<div class="post-item petition-item">
+					<div class="post-item-content">
+						<h3><a href="<%= pet_url(pet) %>"><%= pet.title %></a></h3>
+						<ul>
+							<li>Номер петиції: <%= pet.number %></li>
+							<li>Підписи приймаються до: <%= pet.deadline %></li>
+							<li>Зібрано підписів: <%= pet.real_votes %> (<%= (pet.real_votes * 100)/pet.votes_need %>%)</li>
+						</ul>
+					</div>
+				</div>
+				<% end %>
+			</div>
+		</div>
+		<div class="col-md-4 col-sm-4">
+			<%= render partial: 'partials/sidebar', locals: {post: @post} %>
+		</div>
+	</div>
+</div>

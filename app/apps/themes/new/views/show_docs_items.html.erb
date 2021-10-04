@@ -1,0 +1,47 @@
+<div class="content-prewrap">
+	<div class="row">
+		<div class="col-md-8 col-sm-8 post-view">
+			<ol class="breadcrumb" style="margin-left: 0;">
+				<li><a href="/">На головну</a></li>
+				<li><%== truncate(sanitize(@post.title), length: 80) %></li>
+			</ol>
+			<article class="post-content docs-content">
+				<h1 class="inner-post-title"><%== @post.title %></h1>
+				<span class="post-delimiter"></span>
+				<div class="doc-inner-middle-block">
+					<a class="inner-dl-doc" href="<%= @post.rada_docs_url %>">Завантажити</a>
+					<p class="post-listing-item-date"><span>Опубліковано:</span> <%= l(@post.created_at, format: "%B %d, %Y") %></p>
+					<% if @post.show_updated.to_i == 1 %>
+					<p class="post-listing-item-date"><span>Оновлено:</span> <%= l(@post.updated_at, format: "%B %d, %Y") %></p>
+					<% end %>
+				</div>
+				<div class="post-item-inner-content">
+					<% if @post.doc_type == "Рішення виконкому" %>
+					<img class="sp-centered-image" src="https://rada-uzhgorod.gov.ua/uploads/sites/2/2019/01/5-1.jpg" alt="герб" width="84" height="92">
+					<p style="text-align: center; font-family: 'times new roman', times, serif;"><strong>УЖГОРОДСЬКА МІСЬКА РАДА</strong><strong>&nbsp;</strong></p>
+					<p style="text-align: center; font-family: 'times new roman', times, serif;"><strong>ВИКОНАВЧИЙ КОМІТЕТ</strong><strong>&nbsp;</strong></p>
+					<p style="text-align: center; font-family: 'times new roman', times, serif;"><strong>Р І Ш Е Н Н Я</strong></p>
+					<p style="text-align: center; font-family: 'times new roman', times, serif;"><%= l(@post.mce_date, format: "%d.%m.%Y") %>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Ужгород&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; №&nbsp;<%= @post.mce_doc_number %></p>
+					<br/>
+					<% end %>
+					<% if @post.doc_type == "Рішення сесій" %>
+					<p style="text-align: center;"><strong><span style="font-family: 'times new roman', times, serif; font-size: 16pt;"><img src="https://rada-uzhgorod.gov.ua/uploads/sites/2/2019/01/5-1.jpg" alt="герб" width="84" height="92"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;УЖГОРОДСЬКА МІСЬКА РАДА&nbsp; &nbsp; &nbsp; <img src="https://rada-uzhgorod.gov.ua/media/1/herb-uzh.png" alt="герб" width="84" height="92"></span> </strong></p>
+					<p style="text-align: center;"><strong><span style="text-decoration: underline; font-family: 'times new roman', times, serif; font-size: 14pt;">&nbsp;<%= @post.mce_session_number %></span><span style="font-family: 'times new roman', times, serif; font-size: 14pt;"> &nbsp; сесія  &nbsp; </span><span style="text-decoration: underline; font-family: 'times new roman', times, serif; font-size: 14pt;">&nbsp;<%= @post.mce_forum_number %></span><span style="font-family: 'times new roman', times, serif; font-size: 14pt;"> &nbsp;скликання</span></strong></p>
+					<p style="text-align: center;"><span style="font-family: 'times new roman', times, serif; font-size: 14pt;"><%= @post.mce_text %></span></p>
+					<p style="text-align: center;"><span style="font-family: 'times new roman', times, serif; font-size: 18pt;"><strong>Р І Ш Е Н Н Я </strong></span></p>
+					<br/>
+					<p style="text-align: center;"><strong><span style="text-decoration: underline; font-family: 'times new roman', times, serif; font-size: 14pt;"><%= l(@post.mce_date, format: "%d %b %Y ") %> року</span><span style="font-family: 'times new roman', times, serif; font-size: 14pt;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Ужгород&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;№ <%= @post.mce_doc_number %></span></strong></p>
+					<br/>
+					<% end %>
+					<% if @post.content.length > 10 %>
+					<%= raw @post.content %>
+					<% end %>
+				</div>
+				<p class="docs-note"><span>ПРИМІТКА:</span> На оновлений сайт Ужгородської міської ради перенесені всі технічні параметри документів, які були опубліковані на старій версії сайту до 01.04.2016 року (дата запуску оновленого сайту), а саме: назва документу, файл електронної версії документу, дата публікації документу.</p>
+			</article>
+		</div>
+		<div class="col-md-4 col-sm-4">
+			<%= render partial: 'partials/sidebar', locals: {post: @post} %>
+		</div>
+	</div>
+</div>

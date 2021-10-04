@@ -1,0 +1,23 @@
+<div class="content-prewrap">
+	<div class="row">
+		<div class="col-md-9 col-sm-9 post-view">
+			<article class="post-content">
+				<div class="item-content">
+					<%= raw @post.the_content %>
+				</div>
+			</article>
+		</div>
+		<div class="col-md-3 col-sm-3">
+			<div class="announcements-block">
+				<% notes = CamaleonCms::Note.all.published.limit(5) %>
+				<p class="cat-naming">Новини</p>
+				<% notes.order(created_at: :desc).each do |post| %>
+				<div class="post-listing-item">
+					<h3 class="post-listing-item-title"><a href="<%= post_url(post) %>"><%== post.title %></a></h3>
+					<p class="post-listing-item-date"><%= l(post.created_at, format: "%B %d, %Y") %></p>
+				</div>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>

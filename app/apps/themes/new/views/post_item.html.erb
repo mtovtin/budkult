@@ -1,0 +1,42 @@
+<div class="content-prewrap">
+  <div class="row">
+    <div class="col-md-8 col-sm-8 post-view">
+      <ol class="breadcrumb" style="margin-left: 0;">
+        <li><a href="/">На головну</a></li>
+        <% if @post.note_categories.length > 0 %><li><%= @post.note_categories.first.name %></li><% end %>
+        <li><%== truncate(sanitize(@post.title), length: 80) %></li>
+      </ol>
+      <article class="post-content">
+        <% if @post.hide_title.to_i != 1 %>
+        <h1 class="inner-post-title"><%== @post.title %></h1>
+        <% end %>
+
+        <div class="row">
+          <div class="col-md-6">
+            <p class="post-listing-item-date">Опубліковано: <%= l(@post.created_at, format: "%B %d, %Y") %></p>
+          </div>
+          <% if @post.show_updated.to_i == 1 %>
+          <div class="col-md-6 flexended-row">
+            <p class="post-listing-item-date">Оновлено: <%= l(@post.updated_at, format: "%B %d, %Y") %></p>
+          </div>
+          <% end %>
+        </div>
+
+        <span class="post-delimiter"></span>
+
+        <% if @post.hide_thumb.to_i != 1 %>
+        <% if @post.post_imported_thumb && @post.post_imported_thumb.length > 0 %>
+        <img class="img-responsive post-imported-thumb" src="<%= @post.post_imported_thumb %>" alt="<%== @post.title %>">
+        <% end %>
+        <% end %>
+
+        <div class="post-item-inner-content">
+          <%= raw do_shortcode(@post.content) %>
+        </div>
+      </article>
+    </div>
+    <div class="col-md-4 col-sm-4">
+      <%= render partial: 'partials/sidebar', locals: {post: @post} %>
+    </div>
+  </div>
+</div>

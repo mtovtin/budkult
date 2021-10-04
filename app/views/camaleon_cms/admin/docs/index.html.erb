@@ -1,0 +1,76 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<div class="row">
+			<div class="col-md-6">
+				<h4><span class="fa fa-file"></span> Документи</h4>
+			</div>
+			<div class="col-md-3">
+				<div class='form-group'>
+					<form action="<%= url_for(action: :index) %>" method="get" class="cama_ajax_request">
+						<div id='plugin_field_post_created_at' class='input-group date'>
+							<input type='text' name='date' data-format='yyyy-MM-dd' class='form-control' placeholder="2019-03-23" value="<%= params[:date] if params[:date].present? %>" />
+							<span class='add-on input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>
+							<span class="input-group-btn"><button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button></span>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<form action="<%= url_for(action: :index) %>" method="get" class="cama_ajax_request">
+					<div class="input-group">
+						<input type="text" class="form-control" name="q" value="<%= params[:q] %>">
+						<span class="input-group-btn"><button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button></span>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="panel-body">
+		<table class="table table-responsive table-hover table-striped">
+			<thead>
+				<tr>
+					<th>Назва</th>
+					<th>Користувач</th>
+					<th><%= t('camaleon_cms.admin.table.status') %></th>
+					<th>Категорії</th>
+					<th>Теги</th>
+					<th>Створено</th>
+					<th><%= t('camaleon_cms.admin.table.actions')%></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @docs.order("created_at desc").each do |f| %>
+				<tr>
+					<td><%= link_to sanitize(f.title), {action: :edit, id: f.id} %></td>
+					<td><%= f.user ? f.user.username : '' %></td>
+					<% if f.status == "draft" %>
+					<% class_name = "warning" %>
+					<% status_name = "Чернетка" %>
+					<% else %>
+					<% class_name = "info" %>
+					<% status_name = "Опублікований" %>
+					<% end %>
+					<td><span class="label label-<%= class_name%> label-form"><%= status_name %></span></td>
+					<td>
+						<% f.doc_categories.each do |t| %>
+						<a class='cama_ajax_request' href='/admin/docs/category/<%= t.id%>'><span class='label label-success label-form'><%= t.name %></span></a>
+						<% end %>
+					</td>
+					<td>
+						<% f.doc_tags.each do |t| %>
+						<a class='cama_ajax_request' href='/admin/docs/tag/<%= t.id%>'><span class='label label-default label-form'><%= t.name %></span></a>
+						<% end %>
+					</td>
+					<td><%= l(f.created_at, format: "%B %d, %Y") %></td>
+					<td>
+						<%= link_to raw('<i class="fa fa-pencil"></i>'), {action: :edit, id: f.id}, class: "btn btn-default btn-xs cama_ajax_request", title: "#{t('camaleon_cms.admin.button.edit')}" if can? :update, f %>
+						<%= link_to raw('<i class="fa fa-times"></i>'), { action: :destroy, id: f.id }, method: :delete, data: { confirm: t('camaleon_cms.admin.message.delete') }, class: "btn btn-danger btn-xs cama_ajax_request btn_del", title: "#{t('camaleon_cms.admin.button.delete')}" %>
+					</td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+		<%= raw cama_do_pagination(@docs) %>
+	</div>
+</div>
+<script>jQuery(function(){ $('#plugin_field_post_created_at').datetimepicker({format: 'YYYY-MM-DD'}) })</script>

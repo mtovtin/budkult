@@ -1,0 +1,40 @@
+<% if attributes["notes"] && attributes["notes"].length > 0 %>
+  <% posts = attributes["notes"].split(",") %>
+  <% posts.each do |post_item| %>
+    <% post = CamaleonCms::Note.find(post_item) %>
+    <% if post %>
+      <div class="post-listing-item">
+        <h3 class="post-listing-item-title"><a href="<%= post_url(post) %>"><%== post.title %></a></h3>
+        <p class="post-listing-item-date"><%= l(post.created_at, format: "%B %d, %Y") %></p>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+
+<% if attributes["cats"] && attributes["cats"].length > 0 %>
+  <% taxons = attributes["cats"].split(",") %>
+  <% taxons.each do |tax| %>
+    <% taxon = CamaleonCms::NoteCategory.find(tax) %>
+    <% posts = CamaleonCms::Note.catted_with(taxon.slug) %>
+    <% posts.order(created_at: :desc).each do |post| %>
+      <div class="post-listing-item">
+        <h3 class="post-listing-item-title"><a href="<%= post_url(post) %>"><%== post.title %></a></h3>
+        <p class="post-listing-item-date"><%= l(post.created_at, format: "%B %d, %Y") %></p>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+
+<% if attributes["tags"] && attributes["tags"].length > 0 %>
+  <% taxons = attributes["tags"].split(",") %>
+  <% taxons.each do |tax| %>
+    <% taxon = CamaleonCms::NoteTag.find(tax) %>
+    <% posts = CamaleonCms::Note.tagged_with(taxon.slug) %>
+    <% posts.order(created_at: :desc).each do |post| %>
+      <div class="post-listing-item">
+        <h3 class="post-listing-item-title"><a href="<%= post_url(post) %>"><%== post.title %></a></h3>
+        <p class="post-listing-item-date"><%= l(post.created_at, format: "%B %d, %Y") %></p>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

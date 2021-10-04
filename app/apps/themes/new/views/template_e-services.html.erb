@@ -1,0 +1,20 @@
+<div class="content-prewrap services-view">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="inner-post-title text-center"><%== @post.title %></h1>
+
+      <div class="services-row">
+        <% current_theme.the_fields_grouped(["e-service-name", "e-service-link", "e-service-thumb"]).each_with_index do |group, index| %>
+        <a class="service-item" href="<%= group["e-service-link"].first %>">
+          <img src="<%= group["e-service-thumb"].first %>">
+          <span><%= group["e-service-name"].first %></span>
+        </a>
+        <% end %>
+      </div>
+
+      <div class="item-content">
+        <%= raw @post.the_content %>
+      </div>
+    </div>
+  </div>
+</div>

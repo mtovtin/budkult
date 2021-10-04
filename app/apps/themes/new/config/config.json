@@ -1,0 +1,28 @@
+{
+  "name" : "Clean Theme",
+  "description" : "Clean and basic theme (folder = new)",
+  "thumb" : "images/image.png",
+  "settings":[
+    {"label": "Settings", "action_name": "settings"}
+  ],
+  "helpers": [
+    "Themes::New::CustomHelper"
+  ],
+  "hooks": {
+    "on_destroy": [
+      "theme_custom_on_destroy_theme"
+    ],
+    "admin_before_load": ["dispay_requests"],
+    "on_active": [
+      "theme_custom_on_install_theme"
+    ],
+    "on_inactive": [
+      "theme_custom_on_uninstall_theme"
+    ],
+    "contact_form_render": ["camaleon_cms_contact_render"],
+    "front_before_load": ["my_helper_before_app_load"],
+    "on_theme_settings": [
+      "theme_custom_settings"
+    ]
+  }
+}

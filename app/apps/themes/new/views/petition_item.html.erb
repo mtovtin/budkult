@@ -1,0 +1,42 @@
+<div class="content-prewrap">
+    <div class="row">
+        <div class="col-md-8 col-sm-8 post-view">
+            <article class="post-content pety-row-fll">
+                <h1 class="inner-post-title"><%== @petition.title %></h1>
+                <p class="post-listing-item-date"><%= l(@petition.created_at, format: "%B %d, %Y") %></p>
+                <span class="post-delimiter"></span>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <ul class="petstyle-list">
+                            <li>Петиція №: <%= @petition.number %></li>
+                            <li>Автор петиції: <%= @petition.author %></li>
+                            <li>Дата подання: <%= l(@petition.created_at, format: "%d.%m.%Y") %></li>
+                            <li>Збір підписів до: <%= @petition.deadline %></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <p class="pets-fl-row"><span>Зібрано: <%= @petition.real_votes %></span><span>Залишилось: <%= @petition.votes_need - @petition.real_votes %></span></p>
+                        <progress value="<%= @petition.real_votes %>" max="<%= @petition.votes_need %>"></progress>
+                    </div>
+                </div>
+                <div class="petition-content">
+                    <p class="new-pet-bl-name">СУТЬ ПЕТИЦІЇ:</p>
+                    <%== @petition.content %>
+                </div>
+                <% if @petition.answer && @petition.answer.length > 0 %>
+                <div class="petition-answer">
+                    <p class="new-pet-bl-name">ВІДПОВІДЬ МІСЬКРАДИ:</p>
+                    <%== @petition.answer %>
+                </div>
+                <% end %>
+                <div class="petition-users">
+                   <p class="new-pet-bl-name">ПЕТИЦІЮ ПІДПИСАЛИ:</p>
+                   <%== @petition.voters %>
+               </div>
+           </article>
+       </div>
+       <div class="col-md-4 col-sm-4">
+        <%= render partial: 'partials/sidebar', locals: {post: @post} %>
+    </div>
+</div>
+</div>

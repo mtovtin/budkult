@@ -1,0 +1,9 @@
+<%= form_for current_site.requests.new(), url: {action: :save_request}, html: {method: "post"} do |f| %>
+<%= render partial: "camaleon_cms/flash_messages" %>
+<div class="form-group">
+	<%= text_field_tag 'request[name]', '', class: 'form-control required', placeholder: t('.anonymous_name', default: 'Name') %>
+</div>
+<div class="form-group text-right">
+	<button type="submit" class="btn btn-info"><%= ct('comment', default: 'Comment') %></button>
+</div>
+<% end %>

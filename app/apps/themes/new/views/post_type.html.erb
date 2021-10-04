@@ -1,0 +1,24 @@
+<div class="content-prewrap">
+    <%= render partial: 'partials/breadcrumb', locals: {breadcrumb: @post_type.the_breadcrumb } %>
+    <div class="row">
+        <div class="col-md-8 col-sm-8">
+         <div class="post-items">
+            <% @posts.decorate.each do |post| %>
+            <div class="post-item">
+                <a href="<%= post.the_url %>" class="post-item-thumb">
+                    <img src="<%= post.the_thumb_url %>" alt="<%== post.the_title %>">
+                </a>
+                <div class="post-item-content">
+                    <h3><a href="<%= post.the_url %>"><%== post.the_title %></a></h3>
+                    <p class="post-listing-item-date"><%= l(post.created_at, format: "%B %d, %Y") %></p>
+                </div>
+            </div>
+            <% end %>
+            <%= raw cama_do_pagination(@posts, {inner_window: 1, outer_window: 1, previous_label: '<', next_label: '>'} ) %>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-4">
+        <%= render partial: 'partials/sidebar', locals: {post: @post} %>
+    </div>
+</div>
+</div>

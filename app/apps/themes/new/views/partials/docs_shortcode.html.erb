@@ -1,0 +1,55 @@
+<% if attributes["docs"] && attributes["docs"].length > 0 %>
+<% docs = attributes["docs"].split(",") %>
+<% docs.each do |doc_item| %>
+<% doc = CamaleonCms::Doc.find(doc_item) %>
+<% if doc %>
+<div class="post-item docs-item">
+	<div class="post-item-content">
+		<h3><a href="/rada_docs/show/<%= doc.slug %>"><%== doc.title %></a></h3>
+		<div class="docs-content-bottom">
+			<p class="docs-pubdate">Опубліковано: <%= l(doc.created_at, format: "%d/%m/%Y") %></p>
+			<a class="docs-dl-link" href="<%= doc.rada_docs_url %>" target="_blank" rel="noopener">Завантажити</a>
+		</div>
+	</div>
+</div>
+<% end %>
+<% end %>
+<% end %>
+
+<% if attributes["cats"] && attributes["cats"].length > 0 %>
+<% taxons = attributes["cats"].split(",") %>
+<% taxons.each do |tax| %>
+<% taxon = CamaleonCms::DocCategory.find(tax) %>
+<% docs = CamaleonCms::Doc.catted_with(taxon.slug) %>
+<% docs.order(created_at: :desc).each do |doc| %>
+<div class="post-item docs-item">
+	<div class="post-item-content">
+		<h3><a href="/rada_docs/show/<%= doc.slug %>"><%== doc.title %></a></h3>
+		<div class="docs-content-bottom">
+			<p class="docs-pubdate">Опубліковано: <%= l(doc.created_at, format: "%d/%m/%Y") %></p>
+			<a class="docs-dl-link" href="<%= doc.rada_docs_url %>" target="_blank" rel="noopener">Завантажити</a>
+		</div>
+	</div>
+</div>
+<% end %>
+<% end %>
+<% end %>
+
+<% if attributes["tags"] && attributes["tags"].length > 0 %>
+<% taxons = attributes["tags"].split(",") %>
+<% taxons.each do |tax| %>
+<% taxon = CamaleonCms::DocTag.find(tax) %>
+<% docs = CamaleonCms::Doc.tagged_with(taxon.slug) %>
+<% docs.order(created_at: :desc).each do |doc| %>
+<div class="post-item docs-item">
+	<div class="post-item-content">
+		<h3><a href="/rada_docs/show/<%= doc.slug %>"><%== doc.title %></a></h3>
+		<div class="docs-content-bottom">
+			<p class="docs-pubdate">Опубліковано: <%= l(doc.created_at, format: "%d/%m/%Y") %></p>
+			<a class="docs-dl-link" href="<%= doc.rada_docs_url %>" target="_blank" rel="noopener">Завантажити</a>
+		</div>
+	</div>
+</div>
+<% end %>
+<% end %>
+<% end %>

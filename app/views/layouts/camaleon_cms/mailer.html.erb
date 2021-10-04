@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <table style="width: 100%">
+        <tr>
+            <td style="text-align: center;padding: 10px;"><%= image_tag @current_site.the_logo %></td>
+        </tr>
+        <tr>
+            <td>
+                <%= yield %>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

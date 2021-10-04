@@ -1,0 +1,60 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require camaleon_cms/bootstrap.min
+ *= require font-awesome
+ *= require ./styles
+ */
+ 
+ .autocomplete-suggestions {
+ 	text-align: left; cursor: default; border: 1px solid #ccc; border-top: 0; background: #fff; box-shadow: -1px 1px 3px rgba(0,0,0,.1);
+ 	position: absolute; display: none; z-index: 9999; max-height: 254px; overflow: hidden; overflow-y: auto; box-sizing: border-box;
+ }
+ .autocomplete-suggestion { position: relative; padding: 0 .6em; line-height: 23px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 1.02em; color: #333; }
+ .autocomplete-suggestion b { font-weight: normal; color: #1f8dd6; }
+ .autocomplete-suggestion.selected { background: #f0f0f0; }
+ .cnap_form {padding: 20px;background: rgb(253, 253, 253);border: 1px solid #D2D2D2;}
+ .cnap_form input[type="submit"]{margin: 3px 5px;}
+ .cnap_form label {color: #565656;}
+ .radio-type {display:flex;}
+ .radio-type > div {background: rgb(242, 242, 242);padding: 10px 15px;border-radius: 5px;}
+
+ .radio-type input[type="radio"] {
+ 	display:none;
+ }
+ .radio-type input[type="radio"] + label {
+ 	color: #404040;
+ 	font-family:Arial, sans-serif;
+ 	font-size:14px;
+ }
+ .radio-type input[type="radio"] + label span {
+ 	display:inline-block;
+ 	width:19px;
+ 	height:19px;
+ 	margin:-1px 4px 0 0;
+ 	vertical-align:middle;
+ 	cursor:pointer;
+ 	-moz-border-radius:  50%;
+ 	border-radius:  50%;
+ }
+ .radio-type input[type="radio"] + label span {
+ 	background-color:#ccc;
+ }
+ .radio-type input[type="radio"]:checked + label span{
+ 	background-color:green;
+ }
+ .radio-type input[type="radio"] + label span,
+ .radio-type input[type="radio"]:checked + label span {
+ 	-webkit-transition:background-color 0.4s linear;
+ 	-o-transition:background-color 0.4s linear;
+ 	-moz-transition:background-color 0.4s linear;
+ 	transition:background-color 0.4s linear;
+ }
+ 

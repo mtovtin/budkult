@@ -1,0 +1,584 @@
+<%= stylesheet_link_tag asset_path("jquery.gridly.css") %>
+<%= javascript_include_tag asset_path("jquery.gridly.js") %>
+<style type="text/css">
+  .gridly {
+    position: relative;
+    width: 100%;
+  }
+  .brick.small,
+  .brick img {
+    width: 170px;
+    height: 170px;
+    object-fit: cover;
+  }
+  .brick .delete {
+    display: block;
+    color: #333;
+    background: rgba(255, 255, 255, 0.7);
+    width: 30px;
+    height: 30px;
+    top: 0;
+    right: 0;
+    font-size: 20px;
+    position: absolute;
+    text-align: center;
+    line-height: 30px;
+  }
+  .brick .delete:hover {
+    cursor: pointer;
+  }
+</style>
+
+<div class="content-frame">
+  <!-- END CONTENT FRAME TOP -->
+  <%= form_for @post, as: "post", url: {action: @post.new_record? ? :create : :update}, html: {class: 'form-post row cama_ajax_request', id: 'form-post'} do |f| %>
+  <%= f.hidden_field :draft_id, value: @post.draft? ? @post.id : '' %>
+  <!-- START CONTENT FRAME BODY -->
+  <div class="content-frame-body col-md-9">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4>
+          <span class="fa fa-file-o"></span>
+          <% if !@post.new_record? %>
+          <%= "#{t('camaleon_cms.admin.page_title.edit')} #{@post_type.the_title}: #{@post_decorate.the_title}" %> <%= raw @post_decorate.the_status.html_safe %>
+          <% end %>
+          <%= link_to raw("#{t('camaleon_cms.admin.button.view_draft')}"), {action: :edit, id: @post.drafts.pluck('id')}, id: "view_draft", class: "label label-warning label-form", title: "#{t('camaleon_cms.admin.button.view_draft')}", target: '_blank' if @post.drafts.present? %>
+          <%= t('camaleon_cms.admin.page_title.create') + " " + @post_type.the_title.to_s if @post.new_record? %>
+        </h4>
+
+        <ul class="panel-controls">
+          <li><a class="panel-collapse" href="#"><span class="fa fa-angle-down"></span></a></li>
+        </ul>
+      </div>
+      <div class="panel-body">
+        <%= render partial: 'layouts/camaleon_cms/admin/form_error', locals: {data: @post} %>
+        <div class="hidden">
+          <%= f.hidden_field :slug, class: 'translatable slug-post' %>
+        </div>
+        <%= hidden_field :meta, :slug %>
+        <div class="form-group">
+          <%= f.label t('camaleon_cms.admin.table.title') %> <em class="text-danger">*</em><br>
+          <%= f.text_field :title, :class => "form-control required translatable required_all_langs title-post" %>
+        </div>
+        <div class="form-group">
+          <%= f.check_box :hide_title %>
+          <%= f.label :hide_title, "Не виводити заголовок на внутрішній сторінці" %>
+        </div>
+        <% if @post.manage_content?(@post_type) %>
+        <div class="form-group">
+          <%= f.label t('camaleon_cms.admin.sidebar.content') %> <em class="text-danger">*</em><br>
+          <%= f.text_area :content, :class => "form-control tinymce_textarea required translatable", :height => '520px', :style => "width: 100%" %>
+        </div>
+        <% end %>
+        <% if @post.manage_summary?(@post_type) %>
+        <div class="form-group">
+          <label for="post_summary"><%= t('camaleon_cms.admin.post_type.summary') %></label><br>
+          <textarea name="meta[summary]" id="post_summary" class="form-control translatable" cols="30" rows="5"><%= @post.get_meta("summary", "") %></textarea>
+        </div>
+        <% end %>
+
+<!--         <strong>Слайдер:&nbsp;</strong><br />
+        <div class="gridly"></div>
+        <a href="#" class="btn btn-default" onclick="multiple_cama_upload_feature_image(); return false;"><i class="fa fa-upload"></i> <%= t('camaleon_cms.admin.post_type.upload_image', default: 'Upload Image')%></a>
+        <p></p>
+        <%= _hook_args = {html: "", f: f, post: @post, post_type: @post_type}; hooks_run("post_form_custom_html", _hook_args); raw(_hook_args[:html]); %>
+        <%= f.hidden_field :slider_images %> -->
+      </div>
+
+    </div>
+
+    <!-- render all custom fields assigned to this post -->
+    <%
+    r = {render: 'camaleon_cms/admin/settings/custom_fields/render', record: @post, field_groups: @post.get_field_groups(), show_shortcode: true}
+    hooks_run('posts_form_custom_fields_render', r)
+    %>
+    <%= render partial: r[:render], locals: {record: r[:record], field_groups: r[:field_groups], show_shortcode: r[:show_shortcode]} %>
+
+    <% unless @post.draft? || @post.new_record? %>
+    <% if @post.manage_comments?(@post_type) %>
+    <div class="panel panel-default panel-lite">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= t('camaleon_cms.admin.post_type.comments') %></h3>
+        <ul class="panel-controls">
+          <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+        </ul>
+      </div>
+      <div class="panel-body ">
+        <div class="form-group">
+          <a href="<%= cama_admin_post_comments_path(post_id: @post.id) %>" class="btn btn-default" target="_blank"><i class="fa fa-comments"></i> <%= t('camaleon_cms.admin.post_type.view_comments') %>(<%= @post.total_comments %>)</a>
+        </div>
+      </div>
+    </div>
+    <% end %>
+    <% end %>
+  </div>
+  <!-- END CONTENT FRAME BODY -->
+  <%= render "sidebar", f: f %>
+  <% end %>
+
+  <script type="text/javascript">
+    jQuery(function($){
+      setTimeout(function(){
+        cama_init_post({
+          post_id: '<%= @post.draft? ? (@post.parent.present? ? @post.parent.id : nil) : @post.id %>',
+          post_draft_id: '<%= @post.id if @post.draft? %>',
+          post_status: '<%= @post.status %>',
+          _post_urls: <%= raw @post_type.posts.new({slug: '__-__'}).decorate.the_urls.to_json %>,
+          _drafts_path: '<%= (@post.draft? && !@post.new_record?) ? cama_admin_post_type_draft_path(@post_type.id, @post) : cama_admin_post_type_drafts_path(@post_type.id)  %>',
+          _posts_path: '<%= cama_admin_post_type_posts_path(@post_type.id) %>',
+          _ajax_path: '<%= ajax_cama_admin_post_type_posts_path(@post_type.id) %>',
+          _post_tags_path: '<%= list_cama_admin_post_type_post_tags_path(@post_type.id) %>',
+          recover_draft: "<%= params['recover_draft'].present? && @post.draft? %>",
+          _edit_post_path: '<%= edit_cama_admin_post_type_post_path(@post_type.id, '____')%>'
+
+        });
+      }, 100);
+    });
+  </script>
+</div>
+<!-- <script>
+  function not_cama_upload_feature_image(data) {
+    $.fn.multiple_upload_filemanager($.extend({
+      formats: "image",
+      selected: function (image) {
+        var image_url = image[0].url;
+        $('#feature-image img').attr('src', image_url);
+        $('#feature-image input').val(image_url);
+        $('#feature-image').show();
+      }
+    }, data));
+  }
+
+  var images = [];
+  var sliderImages = "<%= @post.slider_images %>";
+  if (sliderImages.length) {
+    var sliderImagesArr = sliderImages.split(",");
+  } else {
+    var sliderImagesArr = [];
+  }
+
+  function multiple_cama_upload_feature_image(data) {
+    $.fn.multiple_upload_filemanager({
+      formats: 'image',
+      selected: function(file, response) {
+        if (file.length > 0) {
+          file.filter(function(index) {
+            return sliderImagesArr.push(index['url']);
+            images.push(index['url']);
+          });
+
+          $('#post_slider_images').val(sliderImagesArr);
+
+          $('.gridly .brick').each(function () {
+            $(this).remove();
+          });
+
+          for (let i = 0; i <= sliderImagesArr.length - 1; i++) {
+            $('.gridly').append(`<div class="brick small"><a class='delete'>&times;</a>
+              <img class="img-responsive" src="${sliderImagesArr[i]}"></div>`);
+          }
+          $('.gridly').gridly('layout');
+        }
+      }
+    });
+  }
+  $(document).on("click", ".gridly .delete", function(event) {
+    var $this;
+    event.preventDefault();
+    event.stopPropagation();
+    $this = $(this);
+    $this.closest('.brick').remove();
+    $('.gridly').gridly('draggingEnded')
+    return $('.gridly').gridly('layout');
+  });
+
+  var reordered = function($elements) {
+    sliderImagesArr = [];
+    $elements.each(function() {
+      sliderImagesArr.push($(this).children('img').attr('src'));
+    });
+    $('#post_slider_images').val(sliderImagesArr);
+  };
+
+  $(document).ready(function () {
+    $('.gridly').gridly({
+      base: 50,
+      gutter: 10,
+      columns: 12,
+      callbacks: {reordered: reordered}
+    });
+    if (sliderImages.length > 0) {
+      for (let i = 0; i <= sliderImagesArr.length - 1; i++) {
+        $('.gridly').append(`<div class="brick small"><a class='delete'>&times;</a>
+          <img class="img-responsive" src="${sliderImagesArr[i]}"></div>`);
+      }
+    }
+    setTimeout(function() { 
+      $('.gridly').gridly('layout');
+    }, 2000);
+
+    $(".gallery-item-remove").on("click", function () {
+      $('#feature-image').hide();
+      $('#feature-image input').val('');
+      return false;
+    });
+  }); (function() {
+    window["cama_init_media"] = function(media_panel) {
+      var customFileData, file_data, media_files_panel, media_info, media_info_tab_info, media_link_tab_upload, p_upload, show_file;
+      media_info = media_panel.find(".media_file_info");
+      media_files_panel = media_panel.find(".media_browser_list");
+      media_info_tab_info = media_panel.find(".media_file_info_col .nav-tabs .link_media_info");
+      media_link_tab_upload = media_panel.find(".media_file_info_col .nav-tabs .link_media_upload");
+
+      var $bulk = [];
+      var ITEMS = Array.from($('.media_item'));
+      var lastChecked = null;
+
+      media_panel.ready(function() {
+        var f;
+        f = $('body').data('last-folder');
+        return media_panel.trigger('navigate_to', {
+          folder: f
+        });
+      });
+      file_data = function(item) {
+        var data;
+        data = item.data('eval-data') || eval("(" + item.find(".data_value").val() + ")");
+        item.data('eval-data', data);
+        return data;
+      };
+      show_file = function(item, event) {
+        var data, draw_image, edit_img, img, tpl;
+
+        var firsChecked = ITEMS.filter(function (i) {
+          return $(i).attr("data-key") == item.attr("data-key");
+        })[0];
+
+        if (!lastChecked) {
+          lastChecked = firsChecked;
+        }
+
+        if (item.hasClass('selected')) {
+          item.removeClass('selected');
+        } else {
+          item.addClass('selected');
+        }
+
+        if (event.shiftKey) {
+          var start = ITEMS.indexOf(firsChecked);
+          var end = ITEMS.indexOf(lastChecked) + 1;
+
+          $('.media_item').slice(end, start).addClass('selected');
+
+          var selectedItems = ITEMS.slice(Math.min(start, end), Math.max(start, end) + 1)
+
+          selectedItems.forEach((e) => {
+            data = file_data($(e));
+            var index = $bulk.indexOf(data);
+            if (index > -1) {
+              $bulk.splice(index, 1);
+            } else {
+              $bulk.push(data);
+            }
+          });
+        } else {
+          data = file_data(item);
+          var index = $bulk.indexOf(data);
+          if (index > -1) {
+            $bulk.splice(index, 1);
+          } else {
+            $bulk.push(data);
+          }
+        }
+
+        lastChecked = firsChecked;
+
+        media_info_tab_info.click();
+        if (window["callback_media_uploader"]) {
+          tpl = "<div class='p_footer'>" + "<button class='btn btn-primary insert_btn'>" + I18n("button.insert") + "</button>" + "</div>";
+        }
+        media_info.html(tpl);
+        if (window["callback_media_uploader"]) {
+          return media_info.find(".insert_btn").click(function() {
+            data["mime"] = data["type"];
+            window["callback_media_uploader"]($bulk);
+            window["callback_media_uploader"] = null;
+            media_panel.closest(".modal").modal("hide");
+            return false;
+          });
+        }
+      };
+      media_panel.on("click", ".file_item", function(e) {
+        show_file($(this), e);
+        return false;
+      }).on('dblclick', '.file_item', function() {
+        var btn;
+        btn = media_info.find('.insert_btn');
+        if (btn && !btn.attr('disabled') && !btn.attr('readonly')) {
+          return btn.trigger('click');
+        }
+      });
+      media_files_panel.scroll(function() {
+        if (media_files_panel.attr('data-next-page') && $(this).scrollTop() + $(this).outerHeight() === $(this)[0].scrollHeight) {
+          return media_panel.trigger('navigate_to', {
+            paginate: true,
+            custom_params: {
+              page: media_files_panel.attr('data-next-page')
+            }
+          });
+        }
+      });
+      p_upload = media_panel.find(".cama_media_fileuploader");
+      customFileData = function() {
+        var r;
+        r = cama_media_get_custom_params();
+        r['skip_auto_crop'] = true;
+        return r;
+      };
+      p_upload.uploadFile({
+        url: p_upload.attr("data-url"),
+        fileName: "file_upload",
+        sequential: true,
+        sequentialCount: 1,
+        uploadButtonClass: "btn btn-primary btn-block",
+        dragDropStr: '<span style="display: block;"><b>' + p_upload.attr('data-dragDropStr') + '</b></span>',
+        uploadStr: p_upload.attr('data-uploadStr'),
+        dynamicFormData: customFileData,
+        onSuccess: (function(files, res_upload, xhr, pd) {
+          if (res_upload.search("media_item") >= 0) {
+            media_panel.trigger("add_file", {
+              item: res_upload,
+              selected: $(pd.statusbar).siblings().not('.error_file_upload').length === 0
+            });
+            return $(pd.statusbar).remove();
+          } else {
+            return $(pd.statusbar).find(".ajax-file-upload-progress").html("<span style='color: red;'>" + res_upload + "</span>");
+          }
+        }),
+        onError: (function(files, status, errMsg, pd) {
+          return $(pd.statusbar).addClass('error_file_upload').find(".ajax-file-upload-filename").append(" <i class='fa fa-times btn btn-danger btn-xs' onclick='$(this).closest(\".ajax-file-upload-statusbar\").remove();'></i>");
+        })
+      });
+      media_panel.find(".media_folder_breadcrumb").on("click", "a", function() {
+        media_panel.trigger("navigate_to", {
+          folder: $(this).attr("data-path")
+        });
+        return false;
+      });
+      media_panel.on("click", ".folder_item", function() {
+        var f;
+        f = media_panel.attr("data-folder") + "/" + $(this).attr("data-key");
+        if ($(this).attr("data-key").search('/') >= 0) {
+          f = $(this).attr("data-key");
+        }
+        f = f.replace(/\/{2,}/g, '/');
+        media_panel.trigger("navigate_to", {
+          folder: f
+        });
+        return $('body').attr('data-last-folder', f);
+      });
+      media_panel.bind("update_breadcrumb", function() {
+        var breadrumb, folder, folder_items, folder_prefix, index, name, value, _i, _len;
+        folder = media_panel.attr("data-folder").replace("//", "/");
+        folder_prefix = [];
+        if (folder === "/" || folder === "") {
+          folder_items = ["/"];
+        } else {
+          folder_items = folder.split("/");
+        }
+        breadrumb = [];
+        for (index = _i = 0, _len = folder_items.length; _i < _len; index = ++_i) {
+          value = folder_items[index];
+          name = value;
+          if (value === "/" || value === "") {
+            name = I18n("button.root");
+          }
+          if (index === folder_items.length - 1) {
+            breadrumb.push("<li><span>" + name + "</span></li>");
+          } else {
+            folder_prefix.push(value);
+            breadrumb.push("<li><a data-path='" + (folder_prefix.join("/") || "/").replace(/\/{2,}/g, '/') + "' href='#'>" + name + "</a></li>");
+          }
+        }
+        return media_panel.find(".media_folder_breadcrumb").html(breadrumb.join(""));
+      }).trigger("update_breadcrumb");
+      media_panel.bind("navigate_to", function(e, data) {
+        var folder, req_params;
+        if (data["folder"]) {
+          media_panel.attr("data-folder", data["folder"]);
+        }
+        folder = media_panel.attr("data-folder");
+        media_panel.trigger("update_breadcrumb");
+        req_params = cama_media_get_custom_params({
+          partial: true,
+          folder: folder
+        });
+        if (data["paginate"]) {
+          req_params = media_panel.data('last_req_params') || req_params;
+        } else {
+          media_info.html("");
+          media_link_tab_upload.click();
+        }
+        media_panel.data('last_req_params', $.extend({}, req_params, data['custom_params'] || {}));
+        showLoading();
+        return $.getJSON(media_panel.attr("data-url"), media_panel.data('last_req_params'), function(res) {
+          var last_folder;
+          if (data["paginate"]) {
+            if (media_files_panel.children('.file_item').length > 0) {
+              media_files_panel.append(res.html);
+            } else {
+              last_folder = media_files_panel.children('.folder_item:last');
+              if (last_folder.length === 1) {
+                last_folder.after(res.html);
+              } else {
+                media_files_panel.append(res.html);
+              }
+            }
+          } else {
+            media_files_panel.html(res.html);
+          }
+          media_files_panel.attr('data-next-page', res.next_page);
+          return hideLoading();
+        });
+      }).bind("add_file", function(e, data) {
+        var item, last_folder;
+        item = $(data["item"]).hide();
+        last_folder = media_files_panel.children('.folder_item:last');
+        if (last_folder.length === 1) {
+          last_folder.after(item);
+        } else {
+          media_files_panel.prepend(item);
+        }
+        if (data["selected"] === true || data["selected"] === void 0) {
+          item.click();
+        }
+        media_files_panel.scrollTop(0);
+        return item.fadeIn(1500);
+      });
+      media_panel.find('#cama_search_form').submit(function() {
+        media_panel.trigger('navigate_to', {
+          custom_params: {
+            search: $(this).find('input:text').val()
+          }
+        });
+        return false;
+      });
+      media_panel.find('.cam_media_reload').click(function(e, data) {
+        media_panel.trigger('navigate_to', {
+          custom_params: {
+            cama_media_reload: $(this).attr('data-action')
+          }
+        });
+        return e.preventDefault();
+      });
+      media_panel.on("click", "a.del_item, a.del_folder", function() {
+        var item, link;
+        if (!confirm(I18n("msg.delete_item"))) {
+          return false;
+        }
+        link = $(this);
+        item = link.closest(".media_item");
+        showLoading();
+        $.post(media_panel.attr("data-url_actions"), cama_media_get_custom_params({
+          folder: media_panel.attr("data-folder") + "/" + item.attr("data-key"),
+          media_action: link.hasClass("del_folder") ? "del_folder" : "del_file"
+        }), function(res) {
+          hideLoading();
+          if (res) {
+            return $.fn.alert({
+              type: 'error',
+              content: res,
+              title: I18n("button.error")
+            });
+          } else {
+            item.remove();
+            return media_info.html("");
+          }
+        }).error(function() {
+          return $.fn.alert({
+            type: 'error',
+            content: I18n("msg.internal_error"),
+            title: I18n("button.error")
+          });
+        });
+        return false;
+      });
+
+      return media_panel.find("#cama_media_external").submit(function() {
+        if (!$(this).valid()) {
+          return false;
+        }
+        $.fn.upload_url({
+          url: $(this).find("input").val(),
+          //skip_auto_crop: true,
+          callback: function() {
+            return media_panel.find("#cama_media_external")[0].reset();
+          }
+        });
+        return false;
+      }).validate();
+    };
+
+    window['cama_media_get_custom_params'] = function(custom_settings) {
+      var media_panel, r;
+      media_panel = $("#cama_media_gallery");
+      r = eval("(" + media_panel.attr('data-extra-params') + ")");
+      r['folder'] = media_panel.attr("data-folder");
+      if (custom_settings) {
+        $.extend(r, custom_settings);
+      }
+      r['folder'] = r['folder'].replace(/\/{2,}/g, '/');
+      return r;
+    };
+
+    $(function() {
+      return $.fn.multiple_upload_filemanager = function(args) {
+        args = args || {};
+        if (args["formats"] === 'null') {
+          args["formats"] = '';
+        }
+        if (args["dimension"] === 'null') {
+          //args["dimension"] = '1024x768?';
+          args["dimension"] = '';
+        }
+        if (args["versions"] === 'null') {
+          args["versions"] = '';
+        }
+        if (args["thumb_size"] === 'null') {
+          args["thumb_size"] = '';
+        }
+        return open_modal({
+          title: args["title"] || I18n("msg.media_title"),
+          id: 'cama_modal_file_uploader_sec',
+          modal_size: "modal-lg",
+          mode: "ajax",
+          url: root_admin_url + "/media/ajax",
+          ajax_params: {
+            media_formats: args["formats"],
+            dimension: args["dimension"],
+            versions: args["versions"],
+            thumb_size: args["thumb_size"],
+            "private": args['private']
+          },
+          callback: function(modal) {
+            if (args["selected"]) {
+              window["callback_media_uploader"] = args["selected"];
+            }
+            return modal.css("z-index", args["zindex"] || 99999).children(".modal-dialog").css("width", "90%");
+          }
+        });
+      };
+    });
+
+    window['cama_humanFileSize'] = function(size) {
+      var i, units;
+      units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+      i = 0;
+      while (size >= 1024) {
+        size /= 1024;
+        ++i;
+      }
+      return size.toFixed(1) + ' ' + units[i];
+    };
+  }).call(this);
+</script> -->

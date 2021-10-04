@@ -1,0 +1,50 @@
+<div class="simple-calendar">
+	<div class="calendar-heading">
+		<span class="calendar-title"><%= t('date.month_names')[start_date.month] %> <%= start_date.year %></span>
+		<form action="<%= url_for(action: :post_archive_router) %>" method="get" class="cama_ajax_request" autocomplete="off">
+			<div class="input-group">
+				<input type="text" class="form-control posts-archive-datepick" name="date" value="<%= params[:date] %>" placeholder="Пошук по даті">
+				<span class="input-group-btn"><button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button></span>
+			</div>
+		</form>
+	</div>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<% date_range.slice(0, 7).each do |day| %>
+				<th><%= t('date.abbr_day_names')[day.wday] %></th>
+				<% end %>
+			</tr>
+		</thead>
+		<tbody>
+			<% date_range.each_slice(7) do |week| %>
+			<tr>
+				<% week.each do |day| %>
+				<%= content_tag :td, class: calendar.td_classes_for(day) do %>
+				<% if defined?(Haml) && respond_to?(:block_is_haml?) && block_is_haml?(block) %>
+				<% capture_haml(day, sorted_events.fetch(day, []), &block) %>
+				<% else %>
+				<% block.call day, sorted_events.fetch(day, []) %>
+				<% end %>
+				<% end %>
+				<% end %>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
+	<div class="calendar-footer">
+		<% year = (calendar.date_range.first - 1.day).strftime("%Y") %>
+		<% year_second = (calendar.date_range.last + 1.day).strftime("%Y") %>
+		<% month = (calendar.date_range.first - 1.day).strftime("%m") %>
+		<% month_next = (calendar.date_range.last + 1.day).strftime("%m") %>
+		<%= link_to "« #{l(Date.parse("#{year}/#{month}"), format: "%B")}", cama_archive_post_month_path(year: year, month: month), class: "action-month-btn" %>
+
+		<% if params[:month] %>
+		<% month_difference = Date.today.strftime("%m").to_i - params[:month].to_i %>
+		<% end %>
+		
+		<% if params[:month] && Date.today.strftime("%Y%m").to_i > (params[:year] + params[:month]).to_i %>
+		<%= link_to "#{l(Date.parse("#{year_second}/#{month_next}"), format: "%B")} »", cama_archive_post_month_path(year: year_second, month: month_next), class: "action-month-btn" %>
+		<% end %>
+	</div>
+</div>

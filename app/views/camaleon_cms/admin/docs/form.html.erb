@@ -1,0 +1,178 @@
+<div class="content-frame">
+	<%= form_for @doc, as: "doc", url: {action: @doc.new_record? ? :create : :update}, html: {class: 'form-post row', id: 'form-post'} do |f| %>
+	<div class="content-frame-body col-md-9">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4>
+					<span class="fa fa-file-o"></span>
+					<% if !@doc.new_record? %>
+					<%= "#{t('camaleon_cms.admin.page_title.edit')}: #{sanitize(@doc.title)}" %>
+					<% end %>
+					<%= t('camaleon_cms.admin.page_title.create') if @doc.new_record? %>
+				</h4>
+				<ul class="panel-controls">
+					<li><a class="panel-collapse" href="#"><span class="fa fa-angle-down"></span></a></li>
+				</ul>
+			</div>
+			<div class="panel-body">
+				<%= render partial: 'layouts/camaleon_cms/admin/form_error', locals: {data: @doc} %>
+				<div class="hidden">
+					<%= f.hidden_field :slug, class: 'translatable slug-post' %>
+				</div>
+				<div class="form-group">
+					<%= f.label t('camaleon_cms.admin.table.title') %> <em class="text-danger">*</em><br>
+					<%= f.text_field :title, :class => "form-control required translatable required_all_langs title-post", :required => true %>
+				</div>
+				<% if !@doc.new_record? %>
+				<div class="sl-slug-edit">
+					<strong>Постійне посилання:&nbsp;</strong>
+					<span class="sl-link">https://rada-uzhgorod.gov.ua/rada_docs/show/<span class="sl-url"><%= @doc.slug %></span></span> <a href="https://rada-uzhgorod.gov.ua/rada_docs/show/<%= @doc.slug %>" class="btn btn-success btn-xs btn-view" style="" target="_blank" data-original-title="" title="">Переглянути</a>
+				</div>
+				<br />
+				<% end %>
+				<div class="special-doc-items">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Тип шапки документу</label><br>
+								<%= f.select(:doc_type, CamaleonCms::Doc.doc_types.keys, {}, {:class => "form-control select"}) %>
+							</div>
+							<div class="form-group">
+								<label>Номер сесії</label> <em class="text-danger">*</em><br>
+								<%= f.text_field :mce_session_number, :class => "form-control required translatable required_all_langs title-post" %>
+							</div>
+							<div class="form-group">
+								<label>Номер скликання</label> <em class="text-danger">*</em><br>
+								<%= f.text_field :mce_forum_number, :class => "form-control required translatable required_all_langs title-post" %>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Додатковий текст</label><br>
+								<%= f.text_field :mce_text, :class => "form-control required translatable required_all_langs title-post" %>
+							</div>
+							<div class="form-group">
+								<label>Дата</label> <em class="text-danger">*</em>
+								<div class="input-group date required_all_langs" id="doc_mce_date">
+									<input type="text" name="doc[mce_date]" data-format="yyyy-MM-dd hh:mm:ss" class="form-control" value="<%= @doc.mce_date %>" />
+									<span class="add-on input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Номер документу</label> <em class="text-danger">*</em><br>
+								<%= f.text_field :mce_doc_number, :class => "form-control required translatable required_all_langs title-post" %>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label>Документ</label> <em class="text-danger">*</em><br>
+					<div class="group-input-fields-content input-group">
+						<%= f.text_field :rada_docs_url, :class => "form-control required translatable required_all_langs title-post", :required => true %>
+						<span class="input-group-addon btn_upload" onclick="doc_upload_feature_image(); return false;" style="cursor: pointer;">
+							<i class="fa fa-upload"></i>
+							Завантажити
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<%= f.label t('camaleon_cms.admin.sidebar.content') %><br>
+					<%= f.text_area :content, :class => "form-control tinymce_textarea required translatable", :style => "width: 100%" %>
+					<%= f.hidden_field :site_id, value: current_site.id %>
+				</div>
+			</div>
+		</div>
+	</div>
+	<%= render "sidebar", f: f %>
+	<% end %>
+</div>
+<script type="text/javascript">
+	function doc_upload_feature_image(data) {
+		$.fn.upload_filemanager($.extend({
+			formats: "document,zip,rar,tar,7z",
+			selected: function (image) {
+				var image_url = image.url;
+				$('#doc_rada_docs_url').val(image_url);
+			}
+		}, data));
+	}
+	$(document).ready(function (){
+		$('#doc_mce_date').datetimepicker({
+			defaultDate: "<%= Date.today %>",
+			format: 'YYYY-MM-DD'
+		});
+
+		$('.special-doc-items .required_all_langs').parent().hide();
+		if ($("#doc_doc_type").val() == "Без шапки") {
+			$('.special-doc-items .required_all_langs').parent().hide();
+		}
+		if ($("#doc_doc_type").val() == "Рішення виконкому") {
+			$('.special-doc-items .required_all_langs').parent().hide();
+			$('#doc_mce_doc_number').parent().show();
+			$('#doc_mce_date').parent().show();
+		}
+		if ($("#doc_doc_type").val() == "Рішення сесій") {
+			$('.special-doc-items .required_all_langs').parent().show();
+		}
+
+		$('#doc_doc_type').on('change', function() {
+			if ($(this).val() == "Без шапки") {
+				$('.special-doc-items .required_all_langs').parent().hide();
+			} 
+			if ($(this).val() == "Рішення виконкому") {
+				$('.special-doc-items .required_all_langs').parent().hide();
+				$('#doc_mce_doc_number').parent().show();
+				$('#doc_mce_date').parent().show();
+			}
+			if ($(this).val() == "Рішення сесій") {
+				$('.special-doc-items .required_all_langs').parent().show();
+			}
+		});
+
+		tinymce.init(cama_get_tinymce_settings({
+			selector: '.tinymce_textarea',
+			height: '480px'
+		}));
+
+		var _doc_tags_path = "<%= cama_cama_admin_doc_tags_path %>";
+		var _doc_cats_path = "<%= cama_cama_admin_doc_cats_path %>";
+		var _doc_spcats_path = "<%= cama_cama_admin_doc_spcats_path %>";
+		var doc_tags = $.ajax({
+			type: 'GET',
+			url: _doc_tags_path,
+			dataType: "json",
+			async: false
+		}).responseText;
+
+		var doc_cats = $.ajax({
+			type: 'GET',
+			url: _doc_cats_path,
+			dataType: "json",
+			async: false
+		}).responseText;
+
+		var doc_spcats = $.ajax({
+			type: 'GET',
+			url: _doc_spcats_path,
+			dataType: "json",
+			async: false
+		}).responseText;
+
+		$(".tagsinput").tagEditor({
+			autocomplete: {delay: 0, position: {collision: 'flip'}, source: $.parseJSON(doc_tags)},
+			forceLowercase: false,
+			placeholder: 'Теги ...'
+		});
+
+		$(".catsinput").tagEditor({
+			autocomplete: {delay: 0, position: {collision: 'flip'}, source: $.parseJSON(doc_cats)},
+			forceLowercase: false,
+			placeholder: 'Категорії ...'
+		});
+		$(".spcatsinput").tagEditor({
+			autocomplete: {delay: 0, position: {collision: 'flip'}, source: $.parseJSON(doc_spcats)},
+			forceLowercase: false,
+			placeholder: 'Тип документу'
+		});
+	})
+</script>

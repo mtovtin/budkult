@@ -1,0 +1,37 @@
+<div class="petition-and-acts-wrap">
+	<div class="petition-sidebar">
+		<p class="cat-naming">Петиції</p>
+		<ul>
+			<li class="petition-menu-item">
+				<a href="https://petition.e-dem.ua/rt/Account/Login?ReturnUrl=%2Fuzhgorod%2FPetition%2FCreateSearch">Подати петицію</a>
+			</li>
+			<li class="petition-menu-item">
+				<a href="/petitions/cat/answer">Надана відповідь</a>
+			</li>
+			<li class="petition-menu-item">
+				<a href="/petitions/cat/archive">Архів петицій</a>
+			</li>
+		</ul>
+	</div>
+	<div class="normative-acts-sidebar">
+		<p class="cat-naming">Нормативні акти</p>
+		<ul>
+			<% menu = current_site.nav_menus.find_by_slug('petitsii') %>
+			<% if menu %>
+			<% menu.children.includes(:custom_field_values).reorder("term_order asc").each do |item| %>
+			<li class="petition-menu-item">
+				<a href="<%= item.description %>">
+					<%= item.name %>
+				</a>
+			</li>
+			<% end %>
+			<% end %>
+		</ul>
+	</div>
+</div>
+<div class="archive-calendar">
+	<% posts = CamaleonCms::Note.published.all %>
+	<%= month_calendar(attribute: :created_at, events: posts) do |date, meetings| %>
+	<%= link_to l(date, format: "%d"), cama_archive_post_path(year: l(date, format: "%Y"), month: l(date, format: "%m"), day: l(date, format: "%d")) %>
+	<% end %>
+</div>

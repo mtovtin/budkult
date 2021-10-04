@@ -1,0 +1,55 @@
+<div class="content-prewrap">
+    <div class="row">
+        <div class="col-md-8 col-sm-8">
+            <ol class="breadcrumb" style="margin-left: 0;">
+                <li><a href="/">На головну</a></li>
+                <li>Пошук</li>
+            </ol>
+            <h1 class="inner-post-title greened"><span><%= params[:q] %></span> - результати пошуку</h1>
+            <%= render partial: 'partials/search_form' %>
+            <p>Якщо Ви не знайшли те, що шукали, спробуйте перефразувати пошуковий запит.</p>
+            <% if @docs && @docs.length > 0 %>
+            <h2 class="inner-post-title greened">Документи</h2>
+            <div class="found-post-items">
+                <% @docs.order("created_at desc").each do |doc| %>
+                <div class="post-listing-item">
+                    <h3 class="post-listing-item-title"><a href="/rada_docs/show/<%= doc.slug %>"><%== doc.title %></a></h3>
+                    <p class="post-listing-item-date"><%= l(doc.created_at, format: "%B %d, %Y") %></p>
+                </div>
+                <% end %>
+                <%= raw cama_do_pagination(@docs, {inner_window: 1, outer_window: 1, previous_label: '<', next_label: '>'} ) %>
+            </div>
+            <% end %>
+            <% if @posts && @posts.length > 0 %>
+            <h2 class="inner-post-title greened">Новини</h2>
+            <div class="found-post-items">
+                <% @posts.order("created_at desc").each do |post| %>
+                <div class="post-listing-item">
+                    <h3 class="post-listing-item-title"><a href="<%= post_url(post) %>"><%== post.title %></a></h3>
+                    <p class="post-listing-item-date"><%= l(post.created_at, format: "%B %d, %Y") %></p>
+                </div>
+                <% end %>
+                <%= raw cama_do_pagination(@posts, {inner_window: 1, outer_window: 1, previous_label: '<', next_label: '>'} ) %>
+            </div>
+            <% end %>
+            <% if @pages && @pages.length > 0 %>
+            <h2 class="inner-post-title greened">Сторінки</h2>
+            <div class="found-post-items">
+                <% @pages.order("created_at desc").decorate.each do |post| %>
+                <div class="post-listing-item">
+                    <h3 class="post-listing-item-title"><a href="<%= post.the_url %>"><%== post.the_title %></a></h3>
+                    <p class="post-listing-item-date"><%= l(post.created_at, format: "%B %d, %Y") %></p>
+                </div>
+                <% end %>
+                <%= raw cama_do_pagination(@pages, {inner_window: 1, outer_window: 1, previous_label: '<', next_label: '>'} ) %>
+            </div>
+            <% end %>
+            <% if @posts.empty? && @pages.empty? %>
+            <%= content_tag("div", raw(ct('no_contents_found', default: 'No contents found')), class: "alert alert-warning") %>
+            <% end %>
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <%= render partial: 'partials/sidebar', locals: {post: @post} %>
+        </div>
+    </div>
+</div>

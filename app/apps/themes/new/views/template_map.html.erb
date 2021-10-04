@@ -1,0 +1,19 @@
+<div class="content-prewrap">
+  <div class="row">
+    <div class="col-md-12 post-view">
+      <article class="post-content">
+        <% if @post.hide_title.to_i != 1 %>
+        <h1 class="inner-page-title"><%== @post.the_title %></h1>
+        <% end %>
+        <div class="item-content">
+          <%= raw @post.the_content %>
+        </div>
+      </article>
+    </div>
+  </div>
+</div>
+
+<script>(function(d,s,id){var js,msjs=d.getElementsByTagName(s)[0];
+  if(d.getElementById(id))return;js=d.createElement(s);js.id=id;
+  js.src="//map.shtab.net/static/embed/embed.min.js";
+msjs.parentNode.insertBefore(js,msjs);}(document,"script","shtab_map_embed"));</script>

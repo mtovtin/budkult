@@ -1,0 +1,43 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4><span class="fa fa-envelope-open-o"></span> Електронні запити</h4>
+    </div>
+    <div class="panel-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <% @op_fields.each do |f| %>
+              <% if f[:field_type] == 'file' %>
+                <th><%= t('attached_files') %></th>
+              <% else %>
+                <th><%= f[:label].to_s.translate %></th>
+              <% end %>
+            <% end %>
+            <th>Створено</th>
+          </tr>
+          </thead>
+          <tbody>
+            <% @forms.each do |form| %>
+            <% value = (JSON.parse(form.settings).to_sym rescue form.value) %>
+            <tr>
+                <% @op_fields.each do |default| %>
+                <% cid = default[:cid].to_sym %>
+                <% if default[:field_type] == "file" && !value[:fields][cid].nil? %>
+                <td>
+                    <% [value[:fields][cid]].flatten.each do |file| %>
+                    <%= link_to file.split('/').last, file, target: '_blank' %><br>
+                    <% end %>
+                </td>
+                <% elsif default[:field_type] == "radio" || default[:field_type] == "checkboxes" %>
+                <td><%= value[:fields][cid].map { |f| f.to_s.translate }.join(', ') if value[:fields][cid].present? %></td>
+                <% else %>
+                <td><%= value[:fields][cid] %></td>
+                <% end %>
+                <% end %>
+                <td><%= l((value[:created_at]).to_datetime, format: "%B %d, %Y %H:%M:%S") %></td>
+            </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
+</div>

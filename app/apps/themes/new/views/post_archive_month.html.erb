@@ -1,0 +1,45 @@
+<div class="content-prewrap">
+	<div class="row">
+		<div class="col-md-8 col-sm-8">
+			<ol class="breadcrumb" style="margin-left: 0;">
+				<li><a href="/">На головну</a></li>
+				<li><%= link_to params[:year], cama_archive_post_year_path(year: params[:year]) %></li>
+				<li><%= l(Date.parse("2018-#{params[:month]}-10"), format: "%B") %></li>
+			</ol>
+			<div class="post-items">
+				<% @posts.each do |post| %>
+				<div class="post-item">
+					<a href="<%= post_url(post) %>" class="post-item-thumb">
+						<% if post.post_imported_thumb && post.post_imported_thumb.length > 0 %>
+						<% if post.post_imported_thumb.include? '/media/1/' %>
+						<% thumb = CamaleonCms::Media.find_by(url: post.post_imported_thumb) %>
+						<% if thumb %>
+						<% thumb = thumb.try(:thumb) %>
+						<% else %>
+						<% thumb = post.post_imported_thumb %>
+						<% end %>
+						<img class="post-imported-thumb" src="<%= post.post_imported_thumb %>" alt="<%== post.title %>">
+						<% else %>
+						<img class="post-imported-thumb" src="<%= post.post_imported_thumb %>" alt="<%== post.title %>">
+						<% end %>
+						<% else %>
+						<img src="<%= theme_asset_url("images/template/default-photo.jpg") %>" alt="<%== post.title %>">
+						<% end %>
+					</a>
+					<div class="post-item-content">
+						<h3><a href="<%= post_url(post) %>"><%== post.title %></a></h3>
+						<p class="post-listing-item-date"><%= l(post.created_at, format: "%B %d, %Y") %></p>
+						<% if !post.content.include? '[slider' %>
+						<p class="post-excerpt"><%= raw strip_tags(post.content).truncate(150) %></p>
+						<% end %>
+					</div>
+				</div>
+				<% end %>
+				<%= raw cama_do_pagination(@posts, {inner_window: 1, outer_window: 1, previous_label: '<', next_label: '>'} ) %>
+			</div>
+		</div>
+		<div class="col-md-4 col-sm-4">
+			<%= render partial: 'partials/sidebar', locals: {post: @post} %>
+		</div>
+	</div>
+</div>

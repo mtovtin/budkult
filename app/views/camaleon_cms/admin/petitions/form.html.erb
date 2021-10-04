@@ -1,0 +1,59 @@
+<div class="content-frame">
+	<%= form_for @doc, as: "doc", url: {action: @doc.new_record? ? :create : :update}, html: {class: 'form-post row', id: 'form-post'} do |f| %>
+	<div class="content-frame-body col-md-9">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4>
+					<span class="fa fa-file-o"></span>
+					<% if !@doc.new_record? %>
+					<%= "#{t('camaleon_cms.admin.page_title.edit')}: #{sanitize(@doc.title)}" %>
+					<% end %>
+					<%= t('camaleon_cms.admin.page_title.create') if @doc.new_record? %>
+				</h4>
+				<ul class="panel-controls">
+					<li><a class="panel-collapse" href="#"><span class="fa fa-angle-down"></span></a></li>
+				</ul>
+			</div>
+			<div class="panel-body">
+				<%= render partial: 'layouts/camaleon_cms/admin/form_error', locals: {data: @doc} %>
+				<div class="hidden">
+					<%= f.hidden_field :slug, class: 'translatable slug-post' %>
+				</div>
+				<div class="form-group">
+					<label>Автор</label>
+					<%= f.text_field :author, :class => "form-control required translatable required_all_langs title-post", :required => true %>
+				</div>
+				<% if !@doc.new_record? %>
+				<div class="sl-slug-edit">
+					<strong>Постійне посилання:&nbsp;</strong>
+					<span class="sl-link">https://rada-uzhgorod.gov.ua/petition/<span class="sl-url"><%= @doc.slug %></span></span> <a href="https://rada-uzhgorod.gov.ua/petition/<%= @doc.slug %>" class="btn btn-success btn-xs btn-view" style="" target="_blank" data-original-title="" title="">Переглянути</a>
+				</div>
+				<% end %>
+				<div class="form-group">
+					<%= f.label t('camaleon_cms.admin.sidebar.content') %><br>
+					<%= f.text_area :content, :class => "form-control tinymce_textarea required translatable", :style => "width: 100%" %>
+					<%= f.hidden_field :site_id, value: current_site.id %>
+				</div>
+				<div class="form-group">
+					<label>Відповідь міськради</label>
+					<%= f.text_area :answer, :class => "form-control tinymce_textarea required translatable", :style => "width: 100%" %>
+				</div>
+				<div class="form-group">
+					<label>Підписали</label>
+					<%= f.text_area :voters, :class => "form-control tinymce_textarea required translatable", :style => "width: 100%" %>
+				</div>
+			</div>
+		</div>
+	</div>
+	<%= render "sidebar", f: f %>
+	<% end %>
+</div>
+<script type="text/javascript">
+	$(document).ready(function (){
+		tinymce.init(cama_get_tinymce_settings({
+			selector: '.tinymce_textarea',
+			height: '480px',
+			paste_as_text: false
+		}));
+	});
+</script>

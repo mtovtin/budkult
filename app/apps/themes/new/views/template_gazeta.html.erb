@@ -1,0 +1,36 @@
+<div class="content-prewrap">
+	<div class="row">
+		<div class="col-md-12 post-view">
+			<article class="post-content">
+				<div class="item-content">
+					<div class="post-newspapper-items-row">
+						<% posts = CamaleonCms::Note.published.catted_with('gazeta-uzhgorod').paginate(:page => params[:page], :per_page => 24) %>
+						<% posts.order(created_at: :desc).each do |post| %>
+						<div class="post-newspapper-item">
+							<a href="<%= post_url(post) %>" class="post-item-thumb">
+								<% if post.post_imported_thumb && post.post_imported_thumb.length > 0 %>
+								<% if post.post_imported_thumb.include? '/media/1/' %>
+								<% thumb = CamaleonCms::Media.find_by(url: post.post_imported_thumb) %>
+								<% if thumb %>
+								<% thumb = thumb.try(:thumb) %>
+								<% else %>
+								<% thumb = post.post_imported_thumb %>
+								<% end %>
+								<img class="post-imported-thumb" src="<%= post.post_imported_thumb %>" alt="<%== post.title %>">
+								<% else %>
+								<img class="post-imported-thumb" src="<%= post.post_imported_thumb %>" alt="<%== post.title %>">
+								<% end %>
+								<% else %>
+								<img src="<%= theme_asset_url("images/template/default-photo.jpg") %>" alt="<%== post.title %>">
+								<% end %>
+							</a>
+							<p class="post-newspapper-item-title"><a href="<%= post_url(post) %>"><%== post.title %></a></p>
+						</div>
+						<% end %>
+					</div>
+					<%= raw cama_do_pagination(posts, {inner_window: 1, outer_window: 1, previous_label: '<', next_label: '>'} ) %>
+				</div>
+			</article>
+		</div>
+	</div>
+</div>

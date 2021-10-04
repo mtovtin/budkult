@@ -1,0 +1,109 @@
+<div class="col-md-3" id="post_right_bar">
+	<div id="post-actions" class="panel panel-default panel-lite">
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-12 input-submit"><%= f.submit "#{ (@note.new_record?) ? t('camaleon_cms.admin.page_title.create') : t('camaleon_cms.admin.page_title.update')}", class: "btn btn-success btn-lg btn-block" %></div>
+			</div>
+		</div>
+		<div class="panel-footer">
+			<div class="row">
+				<div class="col-md-6">
+					<%= link_to "Видалити", { action: :destroy, id: @note.id }, method: :delete, data: { confirm: t('camaleon_cms.admin.message.delete') },  class: "text-center text-danger btn-xs btn" unless @note.new_record? %>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default panel-lite">
+		<div class="panel-heading">
+			<h3 class="panel-title"><%= t('camaleon_cms.admin.post_type.configuration')%></h3>
+			<ul class="panel-controls">
+				<li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+			</ul>
+		</div>
+		<div class="panel-body">
+			<div class="form-group">
+				<label class='control-label'>Дата створення</label>
+				<div id='plugin_field_post_created_at' class='input-group date'>
+					<input type='text' name='note[created_at]' data-format='yyyy-MM-dd hh:mm:ss' class='form-control ' value='<%= @note.created_at %>' />
+					<span class='add-on input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<%= f.check_box :show_updated %>
+				<%= f.label :show_updated, "Показати дату оновлення" %>
+			</div>
+			<div class="form-group">
+				<label class="control-label">Статус</label>
+				<select id="note_status" name="note[status]" class="form-control select">
+					<option value="published" <%= (@note[:status] == "published") ? "selected": "" %> ><%= t('camaleon_cms.admin.post_type.published')%></option>
+					<option value="scheduled" <%= (@note[:status] == "scheduled") ? "selected": "" %>>Заплановано</option>
+					<option value="draft" <%= (@note[:status] == "draft") ? "selected": "" %>>Чернетка</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default panel-lite">
+		<div class="panel-heading">
+			<h3 class="panel-title"><%= t('camaleon_cms.admin.post_type.categories')%> <em class="text-danger">*</em></h3>
+			<ul class="panel-controls">
+				<li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+			</ul>
+		</div>
+		<div class="panel-body">
+			<div class="form-group">
+				<ul class="categorychecklist">
+					<% CamaleonCms::NoteCategory.select { |cat| cat.is_enabled }.each do |cat| %>
+					<li>
+						<label class="class_slug"><input type="checkbox" value="<%= cat.name %>" class="required note_catty" <%= "checked" if @note.note_categories.include?(cat) %>><%= cat.name %></label>
+					</li>
+					<% end %>
+				</ul>
+				<input type="hidden" name="note[cat_list]" id="note_catties" />
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default panel-lite">
+		<div class="panel-heading">
+			<h3 class="panel-title"><%= t('camaleon_cms.admin.post_type.tags')%></h3>
+			<ul class="panel-controls">
+				<li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+			</ul>
+		</div>
+		<div class="panel-body">
+			<div class="form-group">
+				<input type="text" name="note[tag_list]" class="tagsinput" value="<%= params[:tag_list] || (@note.note_tags.pluck("name").join(", ") unless @note.new_record?) %>"/>
+			</div>
+			<h3 class="panel-title">Останні теги</h3>
+			<ul id="recent_tags"></ul>
+		</div>
+	</div>
+	<div class="panel panel-default panel-lite">
+		<div class="panel-heading">
+			<h3 class="panel-title">Фото</h3>
+			<ul class="panel-controls">
+				<li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+			</ul>
+		</div>
+		<div class="panel-body">
+			<div class="form-group">
+				<div id="feature-image" class="gallery" style="display: <%= 'none' unless (@note.post_imported_thumb).present? %>">
+					<a class="gallery-item" style="width: 100%; padding: 0" href="#" title="Thumbnail" data-gallery="">
+						<div class="image">
+							<img src="<%= @note.post_imported_thumb %>" class="img-rounded img-responsive" alt="Thumbnail">
+							<span class="gallery-item-remove btn btn-primary btn-xs"><i class="fa fa-times"></i></span>
+						</div>
+					</a>
+					<input type="hidden" name="note[post_imported_thumb]" id="note_post_imported_thumb" value="<%= @note.post_imported_thumb %>"/>
+				</div>
+				<div class="form-group">
+					<%= f.check_box :hide_thumb %>
+					<%= f.label :hide_thumb, "Сховати внутрішній сторінці" %>
+				</div>
+				<a href="#" class="btn btn-default" onclick="not_cama_upload_feature_image(); return false;"><i class="fa fa-upload"></i> <%= t('camaleon_cms.admin.post_type.upload_image', default: 'Upload Image')%></a>
+				<div class="validation-errors"></div>
+			</div>
+		</div>
+	</div>
+	<%= _hook_args = {html: "", f: f, post: @note, post_type: @note_type}; hooks_run("post_form_sidebar_custom_html", _hook_args); raw(_hook_args[:html]); %>
+</div>
+<script>jQuery(function(){ $('#plugin_field_post_created_at').datetimepicker({format: 'YYYY-MM-DD HH:mm'}) })</script>

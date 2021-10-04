@@ -1,0 +1,22 @@
+<% if @post.slider_images && @post.slider_images.length > 0 %>
+<% images = @post.slider_images.split(",") %>
+<div class="middle-carousel-wrap">
+	<div id="carousel-post" class="carousel slide" data-ride="carousel" data-interval="false">
+		<div class="carousel-inner">
+			<% images.each do |img| %>
+			<div class="item">
+				<a class="popup-link" href="<%= img %>">
+					<%= image_tag img %>
+				</a>
+			</div>
+			<% end %>
+		</div>
+		<a class="left carousel-control" href="#carousel-post" data-slide="prev">
+			<span class="glyphicon glyphicon-chevron-left fa fa-angle-left"></span>
+		</a>
+		<a class="right carousel-control" href="#carousel-post" data-slide="next">
+			<span class="glyphicon glyphicon-chevron-right fa fa-angle-right"></span>
+		</a>
+	</div>
+</div>
+<% end %>

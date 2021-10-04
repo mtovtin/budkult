@@ -1,0 +1,37 @@
+<div class="content-prewrap content-prewrap-sp">
+    <div class="row">
+        <div class="col-md-9 col-sm-9 post-view">
+            <article class="post-content">
+                <div class="item-content">
+                    <%= raw @post.the_content %>
+                </div>
+            </article>
+        </div>
+        <div class="col-md-3 col-sm-3">
+            <div class="departments-menu-wrap viddili">
+                <h5>Ужгородська міська рада</h5>
+                <ul class="departments-menu menu">
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-first menu-item-69548">
+                        <a href="https://rada-uzhgorod.gov.ua/rozporyadok-roboti-uzhgorodskoi-miskoi-radi">Розпорядок роботи Ужгородської міської ради</a>
+                    </li>
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36160">
+                        <a href="https://rada-uzhgorod.gov.ua/viddil-po-roboti-z-deputatamy-ta-postijnymy-komisiyamy/">Відділ по роботі з депутатами та постійними комісіями</a>
+                    </li>
+                </ul>
+                <h5>Виконавчі органи ради</h5>
+                <ul class="departments-menu menu">
+                    <% menu = current_site.nav_menus.find_by_slug('departments') %>
+                    <% if menu %>
+                    <% menu.children.includes(:custom_field_values).reorder("term_order asc").each do |item| %>
+                    <li>
+                        <a href="<%= item.description %>">
+                            <%= item.name %>
+                        </a>
+                    </li>
+                    <% end %>
+                    <% end %>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

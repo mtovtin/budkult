@@ -1,0 +1,109 @@
+<div class="content-prewrap">
+	<ol class="breadcrumb" style="margin-left: 0;">
+		<li><a href="/">На головну</a></li>
+		<li><%== truncate(sanitize(@post.the_title), length: 80) %></li>
+	</ol>
+	<div class="row">
+		<div class="col-md-8 col-sm-8 post-view">
+			<article class="post-content">
+				<h1 class="inner-post-title"><%== @post.the_title %></h1>
+				<div class="post-item-inner-content">
+					<div class="row">
+						<div class="col-md-4 col-sm-4">
+							<%= raw @post.the_thumb({class: "img-responsive aparat-thumb"}) %>
+							<% if @post.get_field('aparat-posada') %>
+							<p class="aparat-seat"><%== @post.get_field('aparat-posada') %></p>
+							<% end %>
+							<div class="aparat-schedule">
+								<div class="schedule-head">
+									<p>Прийом громадян:</p>
+								</div>
+								<div class="schedule-footer">
+									<ul class="aparat_mr-schedule-list">
+										<% if @post.get_field('aparat-adresa') %>
+										<li><i class="fa fa-map-marker"></i><%== @post.get_field('aparat-adresa') %></li>
+										<% end %>
+										<% if @post.get_field('aparat-telefon') %>
+										<li><i class="fa fa-phone"></i><%== @post.get_field('aparat-telefon') %></li>
+										<% end %>
+										<% if @post.get_field('aparat-email') %>
+										<li><i class="fa fa-fax"></i><%== @post.get_field('aparat-email') %></li>
+										<% end %>
+										<% if @post.get_field('aparat-dni-priyomu') %>
+										<li><i class="fa fa-calendar-o"></i><%== @post.get_field('aparat-dni-priyomu') %></li>
+										<% end %>
+										<% if @post.get_field('aparat-chas-priyomu') %>
+										<li><i class="fa fa-clock-o"></i><%== @post.get_field('aparat-chas-priyomu') %></li>
+										<% end %>
+									</ul>
+								</div>
+							</div>
+							<% if @post.get_field('aparat-dodatkovo') %>
+							<div class="aparat-schedule">
+								<div class="schedule-head">
+									<p>Примітки:</p>
+								</div>
+								<div class="schedule-footer">
+									<%== @post.get_field('aparat-dodatkovo') %>
+								</div>
+							</div>
+							<% end %>
+							<% if @post.get_field('aparat-storinka-deklaratsii') %>
+							<a class="declaration-btn" href="<%= current_site.post_types.find_by(slug: "page").posts.find(@post.get_field('aparat-storinka-deklaratsii')).decorate.the_url %>">Декларація</a>
+							<% end %>
+						</div>
+						<div class="col-md-8 col-sm-8 aparat-inner-content">
+							<ul class="nav nav-tabs">
+								<li class="active"><a data-toggle="tab" href="#biography"><i class="fa fa-book"></i> Біографія</a></li>
+								<li><a data-toggle="tab" href="#aparat_req"><i class="fa fa-sign-out"></i> Електронне звернення</a></li>
+							</ul>
+							<div class="tab-content">
+								<%= render :partial => "camaleon_cms/flash_messages", locals:{ flash: (flash[:contact_form] || {}).with_indifferent_access } %>
+								<div id="biography" class="tab-pane fade in active">
+									<%= raw @post.the_content %>
+									<% if @post.slug == "mer" %>
+									<div class="middle-carousel-wrap">
+										<div id="carousel-budget" class="carousel slide" data-ride="carousel" data-interval="false">
+											<div class="carousel-inner">
+												<% current_theme.the_field_grouped('_group-budget-slider-index').each do |img| %>
+												<div class="item">
+													<a class="popup-link" href="<%= img %>">
+														<%= image_tag img %>
+													</a>
+												</div>
+												<% end %>
+											</div>
+											<a class="left carousel-control" href="#carousel-budget" data-slide="prev">
+												<span class="glyphicon glyphicon-chevron-left fa fa-angle-left"></span>
+											</a>
+											<a class="right carousel-control" href="#carousel-budget" data-slide="next">
+												<span class="glyphicon glyphicon-chevron-right fa fa-angle-right"></span>
+											</a>
+										</div>
+									</div>
+									<% end %>
+								</div>
+								<div id="aparat_req" class="tab-pane fade">
+									<%= raw do_shortcode('[forms slug=zvernennya-aparat]') %>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</article>
+		</div>
+		<div class="col-md-4 col-sm-4">
+			<%= render partial: 'partials/sidebar' %>
+		</div>
+	</div>
+</div>
+<script>
+	(function ($) {
+		$(document).ready(function () {
+			$('#aparat_req #c9').parent().parent().hide();
+			$('#aparat_req form').submit(function() {
+				$('#c9').val("<%== @post.the_title %>");
+			});
+		});
+	}(window.jQuery || window.$));
+</script>
