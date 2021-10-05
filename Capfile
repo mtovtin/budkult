@@ -3,7 +3,7 @@ require 'capistrano/setup'
 require 'capistrano/deploy'
 require 'capistrano/rvm'
 set :rvm_type, :user
-set :rvm_ruby_version, '3.0.0'
+set :rvm_ruby_version, '2.5.3'
 
 require 'capistrano/bundler'
 require 'capistrano/rails'
