@@ -28,7 +28,7 @@
 	<div class="site-logo-wrap">
 		<div class="container">
 			<div class="prewrapped-middle-header">
-				<a class="header-root-url" href="<%= current_site.the_url %>">
+				<a class="header-root-url" href="https://test.itc.gov.ua">
 					<img class="header-logo" src="<%= current_site.the_logo %>" alt="logo">
 				</a>
 				<%= form_tag(cama_search_new_path, :method => "get", :class => "form-search form-horizontal") do %>
@@ -48,7 +48,7 @@
 		<div class="container">
 			<div id="navbar-main" class="header-additional-nav">
 				<%= raw draw_menu({menu_slug: 'main_menu', container_class: 'nav navbar-nav top-level-menu navbar-collapse collapse'}) %>
-				<a class="citizen-btn" href="http://rada-uzhgorod.gov.ua/e-servisi">Кабінет ужгородця</a>
+				<a class="citizen-btn" href="/e-servisi">Кабінет ужгородця</a>
 				
 				<a href="#my_menu" class="navbar-toggle" id="custom-menu-collapser">
 					<span class="icon-bar"></span>
