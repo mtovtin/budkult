@@ -88,6 +88,9 @@ $.fn.extend({
       $(this).parent().find('.vc_toggle_content').toggle();
       $(this).parent().siblings().find('.vc_toggle_content').hide();
     });
+    
+    elem.addEventListener('touchstart', fn,
+    detectIt.passiveEvents ? {passive:true} : false);
 
     $(".post-content a.href-to-block").click(function(event){
       var full_url = $(this).data('scroll');
