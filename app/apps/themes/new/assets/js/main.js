@@ -116,20 +116,6 @@ $.fn.extend({
       window.location.hash = this.hash;
     });
 
-    var btn = $('#scroll-up-btn');
-    btn.hide();
-    $(window).scroll(function() {
-      if ($(window).scrollTop() > 300) {
-        btn.show();
-      } else {
-        btn.hide();
-      }
-    });
-
-    btn.on('click', function(e) {
-      e.preventDefault();
-      $('html, body').animate({scrollTop:0}, '300');
-    });
     
     $('.popup-link').magnificPopup({
       type: 'image',
