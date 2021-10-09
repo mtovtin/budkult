@@ -31,6 +31,24 @@ $.fn.extend({
   $(document).ready(function () {
     $('.bvi-panel-open').bvi('Init');
 
+    if ($(window).width() < 1200) {
+      $('.container').removeClass('container').addClass('container-fluid');
+    }
+    else {
+      $('.container-fluid').removeClass('container-fluid').addClass('container');
+    }
+    if ($(window).width() < 768) {
+      $('td').attr('width', '');
+    }
+    $(window).resize(function() {
+      if ($(window).width() < 1200) {
+        $('.container').removeClass('container').addClass('container-fluid');
+      }
+      else {
+        $('.container-fluid').removeClass('container-fluid').addClass('container');
+      }
+    });
+
     $('#carousel-header .carousel-inner .item:first-of-type').addClass("active");
     $('#carousel-posts .carousel-inner .item:first-of-type').addClass("active");
     $('#carousel-budget .carousel-inner .item:first-of-type').addClass("active");
