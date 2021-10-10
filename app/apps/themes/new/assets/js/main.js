@@ -49,9 +49,7 @@ $.fn.extend({
       }
     });
 
-    $('#carousel-header .carousel-inner .item:first-of-type').addClass("active");
     $('#carousel-posts .carousel-inner .item:first-of-type').addClass("active");
-    $('#carousel-budget .carousel-inner .item:first-of-type').addClass("active");
     $('#carousel-post .carousel-inner .item:first-of-type').addClass("active");
     $('#carousel-sec-post .carousel-inner .item:first-of-type').addClass("active");
     $('.vc_tta-container .vc_tta-tabs-list li:first-of-type').addClass("active");

@@ -42,6 +42,7 @@ video {
 }
 .header-slider-wrap {
  margin-top: -30px;
+ height: 250px;
 }
 .starter-menu {
  margin: 0;
@@ -82,18 +83,7 @@ a:hover {
  text-transform: uppercase;
  font-size: 11px;
 }
-#carousel-header {
- background-image: asset-theme-url("images/template/pattern.png");
-}
-#carousel-header .item {
- height: 250px;
- background-repeat: no-repeat;
- background-position: center;
- background-size: cover;
-}
-#carousel-header .carousel-inner {
- z-index: -1;
-}
+
 .site-logo-wrap {
  position: relative;
  bottom: 180px;
@@ -2552,9 +2542,6 @@ main.content {
   margin-bottom: 0;
 }
 
-#carousel-header .item {
-  height: 120px;
-}
 .header-slider-wrap {
   margin: 0;
   padding: 0 0 60px;
