@@ -17,7 +17,7 @@
 		</div>
 	</div>
 	<div class="header-slider-wrap">
-		<div class="carousel slide">
+		<div id="carousel-header" class="carousel slide" data-ride="carousel">
 			<div class="carousel-inner">
 				<% current_theme.the_field_grouped('bg-image').shuffle.each do |img| %>
 				<div class="item" style="background-image: url('<%= img %>')"></div>
