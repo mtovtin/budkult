@@ -22,6 +22,8 @@ gem 'magnific-popup-rails', '~> 1.1.0'
 gem 'mmenu-rails'
 gem 'friendly_id', '~> 5.2.4'
 gem 'babosa'
+gem 'ed25519'
+gem "bcrypt_pbkdf", ">= 1.0", "< 2.0"
 gem 'whenever', require: false
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
