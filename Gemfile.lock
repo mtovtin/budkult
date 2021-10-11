@@ -351,7 +351,7 @@ DEPENDENCIES
   binding_of_caller
   bootsnap (>= 1.1.0)
   byebug
-  camaleon_cms (>= 2.5.0)
+  camaleon_cms
   camaleon_image_optimizer
   camaleon_post_created_at!
   capistrano (~> 3.7, >= 3.7.1)

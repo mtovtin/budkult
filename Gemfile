@@ -11,7 +11,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'camaleon_cms',  '>= 2.5.0'
+gem 'camaleon_cms'
 gem 'camaleon_post_created_at', github: 'owen2345/camaleon_post_created_at'
 gem 'camaleon_image_optimizer'
 gem 'draper', '~> 3'
