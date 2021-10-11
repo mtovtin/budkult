@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
-ruby '2.4.0'
+ruby '2.5.2'
 
 gem 'rails', '~> 5.2.2'
 gem 'pg', '>= 0.18', '< 2.0'
@@ -22,7 +22,6 @@ gem 'magnific-popup-rails', '~> 1.1.0'
 gem 'mmenu-rails'
 gem 'friendly_id', '~> 5.2.4'
 gem 'babosa'
-gem 'dalli'
 gem 'whenever', require: false
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
