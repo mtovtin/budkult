@@ -14,8 +14,8 @@ Rails.application.configure do
   config.consider_all_requests_local       = false
   
   config.action_controller.perform_caching = true
-  #config.cache_store = :mem_cache_store
-  config.cache_store = :dalli_store
+  config.cache_store = :mem_cache_store
+  #config.cache_store = :dalli_store
   #config.cache_store = :memory_store, { size: 64.megabytes }
 
   # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
