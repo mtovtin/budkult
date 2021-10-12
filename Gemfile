@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
-ruby '2.4.0'
+ruby '2.5.2'
 
 gem 'rails', '~> 5.2.2'
 gem 'pg', '>= 0.18', '< 2.0'
@@ -15,6 +15,7 @@ gem 'camaleon_cms',  '>= 2.5.0'
 gem 'camaleon_post_created_at', github: 'owen2345/camaleon_post_created_at'
 gem 'camaleon_image_optimizer'
 gem 'draper', '~> 3'
+gem "bcrypt_pbkdf", ">= 1.0", "< 2.0"
 gem 'nokogiri'
 gem 'simple_calendar', :path => 'vendor/gems/simple_calendar'
 gem 'flexslider'
@@ -35,7 +36,6 @@ group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-
   gem 'capistrano', '~> 3.7', '>= 3.7.1'
   gem 'capistrano-bundler', '~> 1.2'
   gem 'capistrano-rails', '~> 1.1.3'
