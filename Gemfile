@@ -15,7 +15,6 @@ gem 'camaleon_cms',  '>= 2.5.0'
 gem 'camaleon_post_created_at', github: 'owen2345/camaleon_post_created_at'
 gem 'camaleon_image_optimizer'
 gem 'draper', '~> 3'
-gem "bcrypt_pbkdf", ">= 1.0", "< 2.0"
 gem 'nokogiri'
 gem 'simple_calendar', :path => 'vendor/gems/simple_calendar'
 gem 'flexslider'
@@ -41,6 +40,8 @@ group :development do
   gem 'capistrano-rails', '~> 1.1.3'
   gem 'capistrano-passenger', '~> 0.2.0'
   gem 'capistrano-rvm'
+  gem "ed25519"
+  gem "bcrypt_pbkdf"
 end
 
 group :test do
