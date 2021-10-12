@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
-ruby '2.5.2'
+ruby '2.4.0'
 
 gem 'rails', '~> 5.2.2'
 gem 'pg', '>= 0.18', '< 2.0'
@@ -11,7 +11,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'camaleon_cms'
+gem 'camaleon_cms',  '>= 2.5.0'
 gem 'camaleon_post_created_at', github: 'owen2345/camaleon_post_created_at'
 gem 'camaleon_image_optimizer'
 gem 'draper', '~> 3'
@@ -22,9 +22,6 @@ gem 'magnific-popup-rails', '~> 1.1.0'
 gem 'mmenu-rails'
 gem 'friendly_id', '~> 5.2.4'
 gem 'babosa'
-gem 'dalli'
-gem 'ed25519'
-gem "bcrypt_pbkdf", ">= 1.0", "< 2.0"
 gem 'whenever', require: false
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -37,12 +34,12 @@ group :development do
   gem 'annotate'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
-  gem 'dalli'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'capistrano'
-  gem 'capistrano-bundler'
-  gem 'capistrano-rails'
-  gem 'capistrano-passenger'
+
+  gem 'capistrano', '~> 3.7', '>= 3.7.1'
+  gem 'capistrano-bundler', '~> 1.2'
+  gem 'capistrano-rails', '~> 1.1.3'
+  gem 'capistrano-passenger', '~> 0.2.0'
   gem 'capistrano-rvm'
 end
 
