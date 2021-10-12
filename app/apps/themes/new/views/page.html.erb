@@ -1,7 +1,7 @@
 <% if %w[about-city].include? @post.slug %>
 <%= javascript_include_tag theme_asset_path("js/slider.js") %>
 <% end%>
-<% if %w[sesiyna-zala-live kameri-onlayn turistichniy-logotip-mista vikonkom-live den-mista-2021].include? @post.slug %>
+<% if %w[sesiyna-zala-live kameri-onlayn video-sesii-2021 arhiv-video-2020 sesiya-arhiv-video-2019 sesiya-arhiv-video-2018  turistichniy-logotip-mista vikonkom-live den-mista-2021].include? @post.slug %>
   <%= stylesheet_link_tag theme_asset_path("css/video-js.css") %>
   <%= javascript_include_tag theme_asset_path("js/video.min.js") %>
   <%= javascript_include_tag theme_asset_path("js/video-youtube.min.js") %>
