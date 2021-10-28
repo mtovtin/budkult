@@ -2866,6 +2866,7 @@ $minTablet: 767px;
 	}
 }
 .tabs__content {
+	display: none;
 	border-radius: 0 5px 5px 5px;
 	&.active {
 		display: block;
