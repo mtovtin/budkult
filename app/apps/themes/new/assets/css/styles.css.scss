@@ -2797,7 +2797,6 @@ $minTablet: 767px;
 
 .tabs__caption {
 	display: flex;
-	column-count: 5;
 	margin-left: -30px;
 	li {
 		margin-bottom: 20px;
@@ -2867,8 +2866,6 @@ $minTablet: 767px;
 	}
 }
 .tabs__content {
-	display: none;
-	background: #f3ece3;
 	border-radius: 0 5px 5px 5px;
 	&.active {
 		display: block;
