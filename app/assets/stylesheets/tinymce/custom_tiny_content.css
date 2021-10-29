@@ -13,3 +13,11 @@
 	margin-bottom: 5px;
 	border: 1px solid #ccc;
 }
+.tabs__caption li {
+	border: 1px solid #ccc;
+	margin-bottom: 5px;
+	list-style: none;
+}
+.tabs__caption {
+padding: 0px;
+}

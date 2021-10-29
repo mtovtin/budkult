@@ -11,7 +11,7 @@ function cama_get_tinymce_settings(settings){
     content_css: tinymce_global_settings["custom_css"].join(","),
     convert_urls: false,
     extended_valid_elements: 'i[*],div[*],p[*],li[*],a[*],ol[*],ul[*],span[*]',
-    toolbar: "bold italic | alignleft aligncenter alignright alignjustify | fontselect fontsizeselect | bullist numlist | outdent indent | undo redo | link unlink image media | forecolor backcolor | styleselect customInsertSlider customInsertAccordion customInsertTabs customInsertDocs customInsertNotes customInsertButton customInsertYtbVideo codemagic "+tinymce_global_settings["custom_toolbar"].join(","),
+    toolbar: "bold italic | alignleft aligncenter alignright alignjustify | fontselect fontsizeselect | bullist numlist | outdent indent | undo redo | link unlink image media | forecolor backcolor | styleselect customInsertSlider customInsertAccordion customInsertTabs customInsertTabs1 customInsertDocs customInsertNotes codemagic "+tinymce_global_settings["custom_toolbar"].join(","),
     image_caption: true,
     language: CURRENT_LOCALE,
     relative_urls: false,
@@ -30,12 +30,6 @@ function cama_get_tinymce_settings(settings){
     },
     fix_list_elements: true,
     setup: function (editor) {
-      editor.addButton('customInsertSlider', {
-        text: 'Слайдер',
-        onClick: function () {
-          editor.insertContent('<p>[slider]</p>');
-        }
-      }),
       editor.addButton('customInsertAccordion', {
         text: 'Спойлер',
         onclick: function () {
@@ -62,8 +56,53 @@ function cama_get_tinymce_settings(settings){
           })
         }
       }),
+      editor.addButton('customInsertTabs1', {
+        text: 'Верхні вкладки',
+        onclick: function () {
+          editor.windowManager.open({
+            title: 'Введіть назву вкладки',
+            body: [
+            {type: 'textbox', name: 'my_tab_name', label: 'Назва'}
+            ],
+            onsubmit: function(e) {
+              var randStr = Math.random().toString(36).substring(2);
+              var randColor = "#"+((1<<24)*Math.random()|0).toString(16);
+              var list_item = editor.dom.create('li', {style: `border-color: ${randColor}`});
+              list_item.innerHTML = `<a class="href-to-block" href="#${randStr}">${e.data.my_tab_name}</a>`;
+              var tab_item = editor.dom.create('div', {class: 'tabs__content tab-pane', id: randStr, style: `border-color: ${randColor}`});
+              tab_item.innerHTML = `<p>Опис для "${e.data.my_tab_name}"</p>`;
+
+              var tag = editor.dom.create('div', {class: "tabs"});
+              tag.innerHTML = `<p></p>
+              <ul class="tabs__caption">
+              <li style="border-color: ${randColor}"><a class="href-to-block" href="#${randStr}">${e.data.my_tab_name}</a></li>
+              </ul>
+              </div>
+              <div class="tabs__content active tab-pane" id="${randStr}" style="border-color: ${randColor}">
+              <p>Опис для "${e.data.my_tab_name}"</p>
+              </div>
+              </div>
+              </div>
+              <p></p>`;
+              var parent = editor.dom.create('div');
+              parent.appendChild(tag);
+
+              var list_items = editor.dom.select('.tabs__caption li');
+              var content_tabs = editor.dom.select('.tab-pane');
+
+              if (list_items && list_items.length > 0) {
+                editor.dom.insertAfter(list_item, list_items[list_items.length - 1]);
+                editor.dom.insertAfter(tab_item, content_tabs[content_tabs.length - 1]);
+              } else {
+                tinyMCE.execCommand('mceInsertContent', false, tag.outerHTML);
+              }
+              editor.selection.collapse(true);
+            }
+          })
+        }
+      }),
       editor.addButton('customInsertTabs', {
-        text: 'Вкладка',
+        text: 'Бокові вкладки',
         onclick: function () {
           editor.windowManager.open({
             title: 'Введіть назву вкладки',
@@ -81,7 +120,7 @@ function cama_get_tinymce_settings(settings){
               var tag = editor.dom.create('div', {class: "cstmn-flex-tab-row"});
               tag.innerHTML = `<p></p><div class="vc_tta-tabs vc_tta-tabs-position-left"><div class="vc_tta-tabs-container">
               <ul class="vc_tta-tabs-list">
-              <li style="border-color: ${randColor}"><a href="#${randStr}" data-toggle="tab">${e.data.my_tab_name}</a></li>
+              <li style="border-color: ${randColor}"><a class="href-to-block" href="#${randStr}" data-toggle="tab">${e.data.my_tab_name}</a></li>
               </ul>
               </div>
 
@@ -149,46 +188,6 @@ function cama_get_tinymce_settings(settings){
           });
         }
       }),
-      editor.addButton('customInsertButton', {
-        text: 'Кнопка',
-        onClick: function () {
-          editor.windowManager.open({
-            title: 'Кнопка',
-            body: [
-            {type: 'textbox', name: 'my_btn_text', label: 'Назва'},
-            {type: 'textbox', name: 'my_btn_url', label: 'Посилання'},
-            {type: 'colorpicker', name: 'my_btn_color', label: 'Колір'}
-            ],
-            onsubmit: function(e) {
-              var txt = e.data.my_btn_text;
-              var url = e.data.my_btn_url;
-              var color = e.data.my_btn_color;
-              editor.insertContent('<p><a class="user-cst-btn" href="' + url + '" style="background: ' + color + '">' + txt + '</a></p>');
-            }
-          });
-        }
-      });
-
-      editor.addButton('customInsertYtbVideo', {
-        text: 'YouTube',
-        onClick: function () {
-          editor.windowManager.open({
-            title: 'YouTube',
-            body: [
-            {type: 'textbox', name: 'my_ytb_url', label: 'Посилання'},
-            {type: 'textbox', name: 'my_ytb_width', label: 'Ширина'},
-            {type: 'textbox', name: 'my_ytb_height', label: 'Висота'}
-            ],
-            onsubmit: function(e) {
-              var url = e.data.my_ytb_url;
-              var width = e.data.my_ytb_width;
-              var height = e.data.my_ytb_height;
-              editor.insertContent('<video class="vjs_video_3-dimensions" controls="controls" width=' + width + ' height=' + height + 
-                ' data-setup=' + JSON.stringify({techOrder: ["youtube"], sources: [{type: "video/youtube", src: url}]}) + '></video>');
-            }
-          });
-        }
-      });
 
       editor.on('blur', function () {
         tinymce.triggerSave();
