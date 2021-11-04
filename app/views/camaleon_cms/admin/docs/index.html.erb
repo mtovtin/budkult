@@ -4,7 +4,7 @@
 			<div class="col-md-6">
 				<h4><span class="fa fa-file"></span> Документи</h4>
 			</div>
-			<div class="col-md-3">
+      <div class="col-md-3">
 				<div class='form-group'>
 					<form action="<%= url_for(action: :index) %>" method="get" class="cama_ajax_request">
 						<div id='plugin_field_post_created_at' class='input-group date'>
@@ -24,6 +24,7 @@
 				</form>
 			</div>
 		</div>
+    <%= render partial: 'camaleon_cms/admin/docs/partials/import_modal' %>
 	</div>
 	<div class="panel-body">
 		<table class="table table-responsive table-hover table-striped">
@@ -73,4 +74,6 @@
 		<%= raw cama_do_pagination(@docs) %>
 	</div>
 </div>
-<script>jQuery(function(){ $('#plugin_field_post_created_at').datetimepicker({format: 'YYYY-MM-DD'}) })</script>
+<script>
+    jQuery(function(){ $('#plugin_field_post_created_at').datetimepicker({format: 'YYYY-MM-DD'}) })
+</script>

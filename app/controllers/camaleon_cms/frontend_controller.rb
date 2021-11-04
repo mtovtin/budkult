@@ -115,6 +115,8 @@ class CamaleonCms::FrontendController < CamaleonCms::CamaleonController
 
 	def show_docs_items
 		@post = CamaleonCms::Doc.find_by(slug: params[:title])
+		cookies.encrypted[:file_id] = @post.file_counter
+		cookies.encrypted[:file_name] = @post.file_name
 	end
 
 	def save_request
@@ -228,12 +230,11 @@ class CamaleonCms::FrontendController < CamaleonCms::CamaleonController
 	end
 
 	def post_archive_router
-		date = Date.parse("#{params[:date]}")
+		date = Date.parse("#{params[:date]}/01")
 		year = date.strftime("%Y")
 		month = date.strftime("%m")
-		day = date.strftime("%d")
 		if params[:date]
-			redirect_to :action => "post_archive", :year => year, :month => month, :day => day
+			redirect_to :action => "post_archive_month", :year => year, :month => month
 		end
 	end
 
@@ -265,7 +266,7 @@ class CamaleonCms::FrontendController < CamaleonCms::CamaleonController
 	def post_archive_month
 		begin
 			date = Date.parse("#{params[:year]}/#{params[:month]}")
-			@posts = CamaleonCms::Note.published.where('extract(year from created_at) = ? AND extract(month from created_at) = ?', params[:year], params[:month])
+			@posts = CamaleonCms::Note.published.where('extract(year from created_at) = ? AND extract(month from created_at) = ?', params[:year], params[:month]).order('created_at ASC')
 			if @posts.empty?
 				return page_not_found
 			end

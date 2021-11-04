@@ -1,0 +1,61 @@
+<style>
+
+</style>
+<%= form_tag filter_path, id: 'documentSearchForm', method: :post, onsubmit: 'return false' do %>
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <div class="form-flex">
+
+    <div class='col-md-6 col-sm-6'>
+      <div class='form-group has-feedback'>
+        <%= label_tag 'Назва документа:' %>
+        <%= text_field_tag :search_term, nil, placeholder: 'Пошук в назві документа', class: 'form-control', id: 'searchTerm' %>
+        <i class="fa fa-search form-control-feedback" style="line-height: 2.2em;"></i>
+      </div>
+    </div>
+
+    <div class='col-md-3 col-sm-3'>
+      <div class='form-group has-feedback'>
+        <%= label_tag 'Реєстраційний номер документа:' %>
+        <%= text_field_tag :doc_number, nil, placeholder: 'Пошук за номером документа', class: 'form-control', id: 'docNumber' %>
+        <i class="fa fa-hashtag form-control-feedback" style="line-height: 2.2em;"></i>
+      </div>
+    </div>
+
+    <div class='col-md-3 col-sm-3'>
+      <div class='form-group has-feedback'>
+        <%= label_tag 'Період створення:' %>
+        <%= text_field_tag :date_filter, nil, placeholder: 'Пошук за датою створення', class: 'form-control', id: 'dateRange', data: { behavior: 'daterangepicker' } %>
+        <i class="fa fa-calendar form-control-feedback" style="line-height: 2.2em;"></i>
+      </div>
+      </div>
+    </div>
+
+    <div class='col-md-4 col-sm-4'>
+      <div class='form-group'>
+        <%= label_tag 'Вид' %>
+        <%= select_tag(:kind, options_for_select(@document_kinds), { prompt: 'Оберіть вид документу', class: 'form-control', id: 'docKind' }) %>
+      </div>
+    </div>
+
+    <div class='col-md-4 col-sm-4'>
+      <div class='form-group'>
+        <%= label_tag 'Тематика' %>
+        <%= select_tag(:branch, options_for_select(@document_branches), { prompt: 'Оберіть тематику', class: 'form-control', id: 'docBranch' }) %>
+      </div>
+    </div>
+
+    <div class='col-md-4 col-sm-4'>
+      <div class='form-group'>
+        <%= label_tag 'Джерело' %>
+        <%= select_tag(:source, options_for_select(@document_sources), { prompt: 'Оберіть джерело', class: 'form-control', id: 'docSource' }) %>
+      </div>
+    </div>
+
+    <div class='col-md-12 col-sm-12'>
+      <div class='form-group'>
+        <%= submit_tag 'Пошук', class: 'btn btn-default btn-block search-btn', id: 'submitBtn' %>
+      </div>
+    </div>
+
+  </div>
+<% end %>

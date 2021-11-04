@@ -1,0 +1,59 @@
+<%= stylesheet_link_tag 'import_form' %>
+<%= javascript_include_tag 'import_form' %>
+<%= render partial: 'public/partials/spinner' %>
+<%= form_tag cama_cama_admin_import_path, id: 'documentImportForm' do %>
+  <div class="form-group">
+    <table class="table">
+      <tr>
+        <th>Зміна режиму імпорту: <br><sub>Увімк/Вимк - поденний/помісячний</sub></th>
+        <td>
+          <div class="form-input">
+            <div class="ios-toggle" id="toggle-ios">
+              <input type="hidden" name="adm_import[date_toggle]" value="">
+              <input type="checkbox" id="ios-toggle" name="adm_import[date_toggle]" checked="true"/><label for="ios-toggle"/>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th>Статус імпортованих документів: <br><sub>Увімк/Вимк - 'опублікований'/'чернетка'</sub></th>
+        <td>
+          <div class="form-input">
+            <div class="ios-toggle" style="font-size: 13px">
+              <input type="hidden" name="adm_import[doc_published]" value="">
+              <input type="checkbox" id="ios-toggle_published" name="adm_import[doc_published]" checked="false"/><label for="ios-toggle_published"/>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th>Фільтр по видам документів</th>
+        <td>
+          <%= select_tag(:kind_filter, options_for_select(@document_kind ||= []), { prompt: 'Оберіть вид документу', class: 'form-control'}) %>
+        </td>
+      </tr>
+      <tr>
+        <th>Категорія імпортованих документів:</th>
+        <td>
+          <div class="form-input">
+            <input class="form-control" type="text" id="autocomplete" name="adm_import[doc_category]" placeholder="Виберіть категорію"/>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th>Вибір дати: <br><sub>Вибір дня/місяця за котрий буде проведено імпорт</sub></th>
+        <td>
+<!--          <div class='input-group'>-->
+          <div class='form-input'>
+            <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+            <div id='import_date_plugin' class='input-group date'>
+              <%= text_field_tag :date, params[:date], class: 'form-control', :required => true %>
+              <span class='add-on input-group-addon'><span class='glyphicon glyphicon-calendar'></span></span>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <%= submit_tag 'Почати імпорт', class: 'btn btn-primary btn-sm', id: 'import-modal-submit-btn' %>
+  </div>
+<% end %>

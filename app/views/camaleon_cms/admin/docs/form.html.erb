@@ -26,7 +26,7 @@
 				<% if !@doc.new_record? %>
 				<div class="sl-slug-edit">
 					<strong>Постійне посилання:&nbsp;</strong>
-					<span class="sl-link">https://rada-uzhgorod.gov.ua/rada_docs/show/<span class="sl-url"><%= @doc.slug %></span></span> <a href="https://rada-uzhgorod.gov.ua/rada_docs/show/<%= @doc.slug %>" class="btn btn-success btn-xs btn-view" style="" target="_blank" data-original-title="" title="">Переглянути</a>
+					<span class="sl-link"><%=request.base_url %>/rada_docs/show/<span class="sl-url"><%= @doc.slug %></span></span> <a href="<%=request.base_url %>/rada_docs/show/<%= @doc.slug %>" class="btn btn-success btn-xs btn-view" style="" target="_blank" data-original-title="" title="">Переглянути</a>
 				</div>
 				<br />
 				<% end %>

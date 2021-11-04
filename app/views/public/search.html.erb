@@ -1,0 +1,20 @@
+<%= stylesheet_link_tag "daterangepicker" %>
+<%= javascript_include_tag "moment" %>
+<%= javascript_include_tag "daterangepicker" %>
+<%= javascript_include_tag "daterangepicker_initializer.js" %>
+
+<div class="content-prewrap">
+  <div class="row">
+    <div class="col-md-12 col-sm-12">
+      <ol class="breadcrumb" style="margin-left: 0;">
+        <li><a href="/">На головну</a></li>
+        <li>Пошук</li>
+      </ol>
+      <h1>Пошук документів</h1>
+      <%= render partial: 'public/partials/document_search_form' %>
+      <div id="docGrid">
+        <%= render partial: 'public/partials/document_search_grid', locals: { items: @docs } %>
+      </div>
+    </div>
+  </div>
+</div>

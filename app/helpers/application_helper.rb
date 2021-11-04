@@ -35,5 +35,25 @@ module ApplicationHelper
 			</div>
 			</div>"
 		end
+
+		# Returns a list of dates with beginning_of_day and end_of_day.
+		# @param [String] start_date
+		# @param [String] end_date
+		# @return [Array<String>]
+		def get_date_range(start_date, end_date)
+			start_date =
+				begin
+					Date.parse(start_date).beginning_of_day
+				rescue StandardError
+					Date.today.beginning_of_day
+				end
+			end_date =
+				begin
+					Date.parse(end_date).end_of_day
+				rescue StandardError
+					Date.today.end_of_day
+				end
+			[start_date, end_date]
+		end
 	end
 end

@@ -9,6 +9,13 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.paths << Rails.root.join('node_modules')
 Rails.application.config.assets.precompile += %w( jquery.gridly.css )
 Rails.application.config.assets.precompile += %w( jquery.gridly.js )
+Rails.application.config.assets.precompile += %w( moment.js )
+Rails.application.config.assets.precompile += %w( daterangepicker.js )
+Rails.application.config.assets.precompile += %w( daterangepicker.css )
+Rails.application.config.assets.precompile += %w( daterangepicker_initializer )
+Rails.application.config.assets.precompile += %w( document_search_ajax )
+Rails.application.config.assets.precompile += %w( import_form.css )
+Rails.application.config.assets.precompile += %w( import_form.js )
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.

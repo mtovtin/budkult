@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_24_233147) do
+ActiveRecord::Schema.define(version: 2021_08_05_081030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -148,8 +148,28 @@ ActiveRecord::Schema.define(version: 2021_03_24_233147) do
     t.string "mce_doc_number"
     t.integer "user_id"
     t.json "options", default: {}
+    t.integer "counter"
+    t.integer "doc_index"
+    t.string "full_index"
+    t.string "source_folder"
+    t.datetime "receipt_date"
+    t.string "source"
+    t.string "branch"
+    t.string "ground"
+    t.string "keywords"
+    t.string "file_type"
+    t.string "kind"
+    t.integer "file_counter"
+    t.string "file_name"
+    t.string "doc_stamp"
+    t.index ["branch"], name: "index_rdauzh_docs_on_branch", where: "(branch IS NOT NULL)"
+    t.index ["counter"], name: "index_rdauzh_docs_on_counter", unique: true, where: "(counter IS NOT NULL)"
+    t.index ["doc_index"], name: "index_rdauzh_docs_on_doc_index", where: "(doc_index IS NOT NULL)"
+    t.index ["kind"], name: "index_rdauzh_docs_on_kind", where: "(kind IS NOT NULL)"
+    t.index ["mce_doc_number"], name: "index_rdauzh_docs_on_mce_doc_number", where: "(mce_doc_number IS NOT NULL)"
     t.index ["site_id"], name: "index_rdauzh_docs_on_site_id"
     t.index ["slug"], name: "index_rdauzh_docs_on_slug"
+    t.index ["source"], name: "index_rdauzh_docs_on_source", where: "(source IS NOT NULL)"
     t.index ["status"], name: "index_rdauzh_docs_on_status"
   end
 
@@ -344,6 +364,18 @@ ActiveRecord::Schema.define(version: 2021_03_24_233147) do
     t.index ["role"], name: "index_rdauzh_users_on_role"
     t.index ["site_id"], name: "index_rdauzh_users_on_site_id"
     t.index ["username"], name: "index_rdauzh_users_on_username"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="GetListCard">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="lang" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="date" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageIndex" nillable="true" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="pagesPerPage" nillable="true" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListCardResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetListCardResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListEcdForCard">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="cardCounter" nillable="true" type="s:decimal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListEcdForCardResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetListEcdForCardResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PrintFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="fileCounter" nillable="true" type="s:decimal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PrintFileResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PrintFileResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListYears">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="organisation" nillable="true" type="s:decimal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListYearsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetListYearsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListMonths">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="year" nillable="true" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="organisation" nillable="true" type="s:decimal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListMonthsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetListMonthsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListDates">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="year" nillable="true" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="month" nillable="true" type="s:decimal" />
+            <s:element minOccurs="1" maxOccurs="1" name="organisation" nillable="true" type="s:decimal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListDatesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetListDatesResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserExists">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UserExistsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserExistsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPublicInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="beginDate" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="endDate" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="unitId" nillable="true" type="s:decimal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPublicInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPublicInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPublicFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="counter" nillable="true" type="s:decimal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPublicFileResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPublicFileResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPublicEcd">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="counter" nillable="true" type="s:decimal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPublicEcdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPublicEcdResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetPettiInformation">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="jsonPettiSave" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SetPettiInformationResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SetPettiInformationResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPettiInformation">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="stateId" type="s:decimal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPettiInformationResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPettiInformationResult" type="tns:PettiInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PettiInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="CALLID" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="SITEID" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="CALLDATE" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="CONTROLDATE" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="STATUSID" nillable="true" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="STATUSTEXT" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MANAGER" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="REPLY" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ListCardsTotal">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="lang" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="date" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ListCardsTotalResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ListCardsTotalResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DownloadUpdates">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="isFull" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DownloadUpdatesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DownloadUpdatesResult" type="tns:ScanClientSOAPCodeResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ScanClientSOAPCodeResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Data" type="s:base64Binary" />
+          <s:element minOccurs="1" maxOccurs="1" name="Result" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="FileName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ErrorMessage" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetListCardSoapIn">
+    <wsdl:part name="parameters" element="tns:GetListCard" />
+  </wsdl:message>
+  <wsdl:message name="GetListCardSoapOut">
+    <wsdl:part name="parameters" element="tns:GetListCardResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetListEcdForCardSoapIn">
+    <wsdl:part name="parameters" element="tns:GetListEcdForCard" />
+  </wsdl:message>
+  <wsdl:message name="GetListEcdForCardSoapOut">
+    <wsdl:part name="parameters" element="tns:GetListEcdForCardResponse" />
+  </wsdl:message>
+  <wsdl:message name="PrintFileSoapIn">
+    <wsdl:part name="parameters" element="tns:PrintFile" />
+  </wsdl:message>
+  <wsdl:message name="PrintFileSoapOut">
+    <wsdl:part name="parameters" element="tns:PrintFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetListYearsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetListYears" />
+  </wsdl:message>
+  <wsdl:message name="GetListYearsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetListYearsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetListMonthsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetListMonths" />
+  </wsdl:message>
+  <wsdl:message name="GetListMonthsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetListMonthsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetListDatesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetListDates" />
+  </wsdl:message>
+  <wsdl:message name="GetListDatesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetListDatesResponse" />
+  </wsdl:message>
+  <wsdl:message name="UserExistsSoapIn">
+    <wsdl:part name="parameters" element="tns:UserExists" />
+  </wsdl:message>
+  <wsdl:message name="UserExistsSoapOut">
+    <wsdl:part name="parameters" element="tns:UserExistsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPublicInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPublicInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetPublicInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPublicInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPublicFileSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPublicFile" />
+  </wsdl:message>
+  <wsdl:message name="GetPublicFileSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPublicFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPublicEcdSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPublicEcd" />
+  </wsdl:message>
+  <wsdl:message name="GetPublicEcdSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPublicEcdResponse" />
+  </wsdl:message>
+  <wsdl:message name="SetPettiInformationSoapIn">
+    <wsdl:part name="parameters" element="tns:SetPettiInformation" />
+  </wsdl:message>
+  <wsdl:message name="SetPettiInformationSoapOut">
+    <wsdl:part name="parameters" element="tns:SetPettiInformationResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPettiInformationSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPettiInformation" />
+  </wsdl:message>
+  <wsdl:message name="GetPettiInformationSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPettiInformationResponse" />
+  </wsdl:message>
+  <wsdl:message name="ListCardsTotalSoapIn">
+    <wsdl:part name="parameters" element="tns:ListCardsTotal" />
+  </wsdl:message>
+  <wsdl:message name="ListCardsTotalSoapOut">
+    <wsdl:part name="parameters" element="tns:ListCardsTotalResponse" />
+  </wsdl:message>
+  <wsdl:message name="DownloadUpdatesSoapIn">
+    <wsdl:part name="parameters" element="tns:DownloadUpdates" />
+  </wsdl:message>
+  <wsdl:message name="DownloadUpdatesSoapOut">
+    <wsdl:part name="parameters" element="tns:DownloadUpdatesResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ExternalFunctionServiceSoap">
+    <wsdl:operation name="GetListCard">
+      <wsdl:input message="tns:GetListCardSoapIn" />
+      <wsdl:output message="tns:GetListCardSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListEcdForCard">
+      <wsdl:input message="tns:GetListEcdForCardSoapIn" />
+      <wsdl:output message="tns:GetListEcdForCardSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PrintFile">
+      <wsdl:input message="tns:PrintFileSoapIn" />
+      <wsdl:output message="tns:PrintFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListYears">
+      <wsdl:input message="tns:GetListYearsSoapIn" />
+      <wsdl:output message="tns:GetListYearsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListMonths">
+      <wsdl:input message="tns:GetListMonthsSoapIn" />
+      <wsdl:output message="tns:GetListMonthsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListDates">
+      <wsdl:input message="tns:GetListDatesSoapIn" />
+      <wsdl:output message="tns:GetListDatesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UserExists">
+      <wsdl:input message="tns:UserExistsSoapIn" />
+      <wsdl:output message="tns:UserExistsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPublicInfo">
+      <wsdl:input message="tns:GetPublicInfoSoapIn" />
+      <wsdl:output message="tns:GetPublicInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPublicFile">
+      <wsdl:input message="tns:GetPublicFileSoapIn" />
+      <wsdl:output message="tns:GetPublicFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPublicEcd">
+      <wsdl:input message="tns:GetPublicEcdSoapIn" />
+      <wsdl:output message="tns:GetPublicEcdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SetPettiInformation">
+      <wsdl:input message="tns:SetPettiInformationSoapIn" />
+      <wsdl:output message="tns:SetPettiInformationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPettiInformation">
+      <wsdl:input message="tns:GetPettiInformationSoapIn" />
+      <wsdl:output message="tns:GetPettiInformationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListCardsTotal">
+      <wsdl:input message="tns:ListCardsTotalSoapIn" />
+      <wsdl:output message="tns:ListCardsTotalSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DownloadUpdates">
+      <wsdl:input message="tns:DownloadUpdatesSoapIn" />
+      <wsdl:output message="tns:DownloadUpdatesSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ExternalFunctionServiceSoap" type="tns:ExternalFunctionServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetListCard">
+      <soap:operation soapAction="http://tempuri.org/GetListCard" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListEcdForCard">
+      <soap:operation soapAction="http://tempuri.org/GetListEcdForCard" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PrintFile">
+      <soap:operation soapAction="http://tempuri.org/PrintFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListYears">
+      <soap:operation soapAction="http://tempuri.org/GetListYears" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListMonths">
+      <soap:operation soapAction="http://tempuri.org/GetListMonths" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListDates">
+      <soap:operation soapAction="http://tempuri.org/GetListDates" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserExists">
+      <soap:operation soapAction="http://tempuri.org/UserExists" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPublicInfo">
+      <soap:operation soapAction="http://tempuri.org/GetPublicInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPublicFile">
+      <soap:operation soapAction="http://tempuri.org/GetPublicFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPublicEcd">
+      <soap:operation soapAction="http://tempuri.org/GetPublicEcd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetPettiInformation">
+      <soap:operation soapAction="http://tempuri.org/SetPettiInformation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPettiInformation">
+      <soap:operation soapAction="http://tempuri.org/GetPettiInformation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListCardsTotal">
+      <soap:operation soapAction="http://tempuri.org/ListCardsTotal" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DownloadUpdates">
+      <soap:operation soapAction="http://tempuri.org/DownloadUpdates" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ExternalFunctionServiceSoap12" type="tns:ExternalFunctionServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetListCard">
+      <soap12:operation soapAction="http://tempuri.org/GetListCard" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListEcdForCard">
+      <soap12:operation soapAction="http://tempuri.org/GetListEcdForCard" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PrintFile">
+      <soap12:operation soapAction="http://tempuri.org/PrintFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListYears">
+      <soap12:operation soapAction="http://tempuri.org/GetListYears" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListMonths">
+      <soap12:operation soapAction="http://tempuri.org/GetListMonths" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListDates">
+      <soap12:operation soapAction="http://tempuri.org/GetListDates" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserExists">
+      <soap12:operation soapAction="http://tempuri.org/UserExists" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPublicInfo">
+      <soap12:operation soapAction="http://tempuri.org/GetPublicInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPublicFile">
+      <soap12:operation soapAction="http://tempuri.org/GetPublicFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPublicEcd">
+      <soap12:operation soapAction="http://tempuri.org/GetPublicEcd" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetPettiInformation">
+      <soap12:operation soapAction="http://tempuri.org/SetPettiInformation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPettiInformation">
+      <soap12:operation soapAction="http://tempuri.org/GetPettiInformation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListCardsTotal">
+      <soap12:operation soapAction="http://tempuri.org/ListCardsTotal" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DownloadUpdates">
+      <soap12:operation soapAction="http://tempuri.org/DownloadUpdates" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ExternalFunctionService">
+    <wsdl:port name="ExternalFunctionServiceSoap" binding="tns:ExternalFunctionServiceSoap">
+      <soap:address location="https://askod.rada-uzhgorod.gov.ua/askod/Services/ExternalFunctionService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ExternalFunctionServiceSoap12" binding="tns:ExternalFunctionServiceSoap12">
+      <soap12:address location="https://askod.rada-uzhgorod.gov.ua/askod/Services/ExternalFunctionService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

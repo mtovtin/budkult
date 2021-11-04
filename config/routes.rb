@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+ 	post '/filter' => 'public#filter'
+	get '/documents' => 'public#index'
+	get '/download_file' => 'public#download'
 	scope PluginRoutes.system_info['relative_url_root'], as: 'cama' do
 		scope module: 'camaleon_cms', as: 'cama' do
 			namespace :admin, path: PluginRoutes.system_info["admin_path_name"] do
@@ -6,6 +9,7 @@ Rails.application.routes.draw do
 				get 'requests/:id' => 'requests#show'
 				get 'doc_tags' => 'docs#doc_tag_list'
 				get 'doc_cats' => 'docs#doc_cat_list'
+				get 'category_autocompletion' => 'docs#doc_cat_autocomplete'
 				get 'doc_spcats' => 'docs#doc_spcat'
 				get 'recent_tags' => 'notes#recent_tags'
 				get 'note_tags' => 'notes#note_tag_list'
@@ -13,6 +17,7 @@ Rails.application.routes.draw do
 				get 'notes/tag/:id' => 'notes#tax_tag_notes'
 				get 'docs/category/:id' => 'docs#tax_category_docs'
 				get 'docs/tag/:id' => 'docs#tax_tag_docs'
+				post 'import/' => 'docs#import'
 				scope :docs do
 					resources :doc_categories
 					resources :doc_tags
@@ -59,5 +64,5 @@ Rails.application.routes.draw do
 				request.params[:slug].match(/[a-zA-Z0-9_=\s\-\/]+/)
 			}
 		end
-	end
+  end
 end

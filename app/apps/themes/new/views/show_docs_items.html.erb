@@ -9,12 +9,19 @@
 				<h1 class="inner-post-title"><%== @post.title %></h1>
 				<span class="post-delimiter"></span>
 				<div class="doc-inner-middle-block">
-					<a class="inner-dl-doc" href="<%= @post.rada_docs_url %>">Завантажити</a>
+					<% if @post.rada_docs_url.present? %>
+						<a class="inner-dl-doc" href="<%= @post.rada_docs_url %>">Завантажити</a>
+					<% elsif @post.doc_stamp == 'personal_data' %>
+						<%= button_tag 'Файл містить персональні дані, і тому недоступний для завантаження', class: 'btn btn-danger' %>
+					<% else %>
+						<%= link_to 'Завантажити', download_file_path,  {:remote => true, class: 'inner-dl-doc', :onclick => "", id: 'doc-download-btn'}  %>
+					<% end %>
 					<p class="post-listing-item-date"><span>Опубліковано:</span> <%= l(@post.created_at, format: "%B %d, %Y") %></p>
 					<% if @post.show_updated.to_i == 1 %>
 					<p class="post-listing-item-date"><span>Оновлено:</span> <%= l(@post.updated_at, format: "%B %d, %Y") %></p>
 					<% end %>
 				</div>
+				<%= render partial: 'public/partials/spinner' %>
 				<div class="post-item-inner-content">
 					<% if @post.doc_type == "Рішення виконкому" %>
 					<img class="sp-centered-image" src="https://rada-uzhgorod.gov.ua/uploads/sites/2/2019/01/5-1.jpg" alt="герб" width="84" height="92">
@@ -41,7 +48,15 @@
 			</article>
 		</div>
 		<div class="col-md-4 col-sm-4">
-			<%= render partial: 'partials/sidebar', locals: {post: @post} %>
 		</div>
 	</div>
 </div>
+<script>
+	$(function () {
+		const docDownloadBtn = document.getElementById('doc-download-btn')
+		docDownloadBtn.addEventListener('click', () => {
+			$('#cover-spin').show()
+			setTimeout(function() { $('#cover-spin').hide(); }, 5000);
+		})
+	});
+</script>

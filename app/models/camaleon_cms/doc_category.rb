@@ -16,4 +16,9 @@ class CamaleonCms::DocCategory < ActiveRecord::Base
 	def normalize_friendly_id(input)
 		input.to_s.to_slug.normalize(transliterations: :ukrainian).to_s
 	end
+
+	def self.autocomplete_search(search_query)
+		suggestions = where("LOWER(name) LIKE ?", "%#{search_query}%").order("id desc").limit(10).pluck(:id, :name)
+		suggestions.collect {|suggestion| {"label" => suggestion[1], "value" => suggestion[0] }}
+	end
 end

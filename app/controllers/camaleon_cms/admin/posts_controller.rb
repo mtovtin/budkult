@@ -117,8 +117,8 @@ class CamaleonCms::Admin::PostsController < CamaleonCms::AdminController
       # delete drafts only on successful update operation
       @post.drafts.destroy_all if delete_drafts
       @post.set_metas(params[:meta])
-      #@post.set_field_values(params[:field_options])
-      @post.set_options(params[:post])
+      @post.set_field_values(params[:field_options])
+      @post.set_options(params[:post]) # changed from @post.set_options(params[:options])
       hooks_run("updated_post", {post: @post, post_type: @post_type})
       flash[:notice] = t('camaleon_cms.admin.post.message.updated', post_type: @post_type.decorate.the_title)
       redirect_to action: :edit, id: @post.id
