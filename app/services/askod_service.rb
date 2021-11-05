@@ -183,7 +183,12 @@ class AskodService
     rescue StandardError
       ''
     end
-    "#{doc_idx} від #{doc_date} #{normalize_text(card['Content'].to_s)}"
+    # change document title depending on its 'kind'
+    if card['Kind'].start_with?('Проєкт рішення', 'Проект рішення')
+      "#{normalize_text(card['Content'].to_s)}"
+    else
+      "#{card['Kind']} #{doc_idx} від #{doc_date} #{normalize_text(card['Content'].to_s)}"
+    end
   end
 
   def get_binary_data_of_the_file(file_counter)
