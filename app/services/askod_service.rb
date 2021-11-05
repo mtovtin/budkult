@@ -183,7 +183,7 @@ class AskodService
     rescue StandardError
       ''
     end
-    "#{card['Kind']} #{doc_idx} від #{doc_date} #{normalize_text(card['Content'].to_s)}"
+    "#{doc_idx} від #{doc_date} #{normalize_text(card['Content'].to_s)}"
   end
 
   def get_binary_data_of_the_file(file_counter)
