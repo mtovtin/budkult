@@ -46,12 +46,14 @@ class PublicController < CamaleonCms::FrontendController
     render partial: 'public/partials/document_search_grid', locals: { items: @docs }
   end
 
-  # Sends data straight to client for downloading. (Instead of saving binary to file and than sending the file)
+  # Sends data straight to the client (browser) for downloading or rendering.
+  # (Instead of saving binary to file and than sending the file)
   # @param [String] file_name
   # @param [Base64] file_binary
   def send_binary_data_to_browser(file_name, file_binary)
-    file_extension = file_name.split('.').last
-    doc_type = case file_extension.downcase
+    file_extension = file_name.split('.').last.downcase
+    doc_type = case file_extension
+               when 'pdf' then 'application/pdf'
                when 'doc' then 'application/msword'
                when 'docx' then 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
                when 'odt' then 'application/vnd.oasis.opendocument.text'
@@ -61,9 +63,11 @@ class PublicController < CamaleonCms::FrontendController
                when 'rtf' then 'application/rtf'
                else 'application/octet-stream'
                end
-    send_data(file_binary, filename: file_name, type: doc_type)
+    send_data(file_binary, filename: file_name, type: doc_type, disposition: 'inline')
   end
 
+  # get the file_id and the file_name from encrypted cookie
+  # make a call to the api-service to retrieve the binary data
   def download
     file_id = cookies.encrypted[:file_id]
     file_name = cookies.encrypted[:file_name]
