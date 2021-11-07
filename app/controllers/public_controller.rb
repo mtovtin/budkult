@@ -1,6 +1,7 @@
 class PublicController < CamaleonCms::FrontendController
   before_action :set_parameters
-  protect_from_forgery with: :exception
+  #protect_from_forgery with: :exception
+  skip_before_action :verify_authenticity_token
 
   def index
     require 'will_paginate/array'
