@@ -15,7 +15,7 @@
 
     <div class='col-md-3 col-sm-3'>
       <div class='form-group has-feedback'>
-        <%= label_tag 'Реєстраційний номер документа:' %>
+        <%= label_tag 'Номер документа:' %>
         <%= text_field_tag :doc_number, nil, placeholder: 'Пошук за номером документа', class: 'form-control', id: 'docNumber' %>
         <i class="fa fa-hashtag form-control-feedback" style="line-height: 2.2em;"></i>
       </div>
@@ -24,7 +24,7 @@
     <div class='col-md-3 col-sm-3'>
       <div class='form-group has-feedback'>
         <%= label_tag 'Період створення:' %>
-        <%= text_field_tag :date_filter, nil, placeholder: 'Пошук за датою створення', class: 'form-control', id: 'dateRange', data: { behavior: 'daterangepicker' } %>
+        <%= text_field_tag :date_filter, nil, placeholder: 'Пошук за датою оприлюднення', class: 'form-control', id: 'dateRange', data: { behavior: 'daterangepicker' } %>
         <i class="fa fa-calendar form-control-feedback" style="line-height: 2.2em;"></i>
       </div>
       </div>
@@ -46,16 +46,8 @@
 
     <div class='col-md-4 col-sm-4'>
       <div class='form-group'>
-        <%= label_tag 'Джерело' %>
-        <%= select_tag(:source, options_for_select(@document_sources), { prompt: 'Оберіть джерело', class: 'form-control', id: 'docSource' }) %>
-      </div>
-    </div>
-
-    <div class='col-md-12 col-sm-12'>
-      <div class='form-group'>
         <%= submit_tag 'Пошук', class: 'btn btn-default btn-block search-btn', id: 'submitBtn' %>
       </div>
     </div>
-
   </div>
 <% end %>

@@ -24,6 +24,7 @@ class AskodService
       next if [0, -1].include?(document_cards)
 
       document_cards.each do |card|
+        next if card['Limits'] != '6193'
         # add a placeholder for file info
         card['file_info'] = nil
         # replace empty values with dashes and add some flags
@@ -137,7 +138,7 @@ class AskodService
         'title' => prepare_title(card),
         'content' => card['Content'],
         'site_id' => 1,
-        'created_at' => card['RegDate'],
+        'created_at' => Date.today.to_s,
         'status' => !doc_status_published ? 'draft' : 'published',
         'mce_doc_number' => card['DocIndex'].to_i,
         'show_updated' => '0',
