@@ -188,7 +188,7 @@ class AskodService
     if card['Kind'].start_with?('Проєкт рішення', 'Проект рішення')
       "#{normalize_text(card['Content'].to_s)}"
     else
-      "#{card['Kind']} #{doc_idx} від #{doc_date} #{normalize_text(card['Content'].to_s)}"
+      "#{doc_idx} від #{doc_date} #{normalize_text(card['Content'].to_s)}"
     end
   end
 
