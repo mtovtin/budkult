@@ -14,7 +14,7 @@
 					<% elsif @post.doc_stamp == 'personal_data' %>
 						<%= button_tag 'Файл містить персональні дані, і тому недоступний для завантаження', class: 'btn btn-danger' %>
 					<% else %>
-						<%= link_to 'Завантажити', download_file_path,  {:remote => true, class: 'inner-dl-doc', :onclick => "", id: 'doc-download-btn', target: '_blank'}  %>
+						<%= link_to 'Завантажити', download_file_path,  {:remote => true, class: 'inner-dl-doc', :onclick => "", id: 'doc-download-btn' }  %>
 					<% end %>
 					<p class="post-listing-item-date"><span>Опубліковано:</span> <%= l(@post.created_at, format: "%B %d, %Y") %></p>
 					<% if @post.show_updated.to_i == 1 %>
