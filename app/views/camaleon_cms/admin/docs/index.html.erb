@@ -40,7 +40,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<% @docs.order("created_at desc").each do |f| %>
+				<% @docs.order("updated_at desc").each do |f| %>
 				<tr>
 					<td><%= link_to sanitize(f.title), {action: :edit, id: f.id} %></td>
 					<td><%= f.user ? f.user.username : '' %></td>
