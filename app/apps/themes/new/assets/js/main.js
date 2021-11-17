@@ -102,7 +102,7 @@ $.fn.extend({
       $('html, body').animate({scrollTop: target_top}, 800);
     });
 
-    $(".post-content a.href-to-block-tab").click(function(event){
+    $(".post-content data-scroll.#scroll-container").click(function(event){
       var full_url = $(this).data('scroll');
       var parts = full_url.split("#");
       var trgt = parts[1];
