@@ -2182,7 +2182,8 @@ input[type=submit] {
  display: none;
 }
 .item-content a {
- color: #0a6008;
+ color: #ffffff;
+ font-weight: 600;
 }
 .content-prewrap-sp {
  padding: 0;
@@ -2801,13 +2802,12 @@ $minTablet: 767px;
 	margin-left: -30px;
 	li {
 		margin: 0 5px 0;
-		background-color: #fff;
-		box-shadow: 0px 0px 10px 0px;
+		background-color: #2E7304;
+		box-shadow: #3C9A03 0px 0px 10px 0px;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
 		width: 100%;
-		color: #000;
 		position: relative;
 		min-height: 54px;
 		text-align: center;
@@ -2827,7 +2827,7 @@ $minTablet: 767px;
 			cursor: pointer;
 		}
 		&:not(.active):hover {
-			background: #f0f3f3;
+			background: #3C9A03;
 			border-color: #f0f3f3;
 		}
 	}
@@ -2837,8 +2837,8 @@ $minTablet: 767px;
 		clear: both;
 	}
 	.active {
-		background-color: #c7c7c7;
-		box-shadow: 0px 0px 10px 0px;
+		background-color: #3C9A03;
+		box-shadow: #3C9A03 0px 0px 10px 0px;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
