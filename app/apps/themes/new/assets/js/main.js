@@ -102,6 +102,21 @@ $.fn.extend({
       $('html, body').animate({scrollTop: target_top}, 800);
     });
 
+    $(".post-content a.href-to-block-tab").click(function(event){
+      var full_url = $(this).data('scroll');
+      var parts = full_url.split("#");
+      var trgt = parts[1];
+
+      var target_offset = $("#" + trgt).offset();
+      var target_top = target_offset.top;
+
+      if (trgt) {
+        event.preventDefault();
+      }
+
+      $('html, body').animate({scrollTop: target_top}, 800);
+    });
+
     $('.my-special-container .tab-pane.fade-title').click(function() {
       $(this).parent().parent().find('.fade-body').toggle();
       $(this).parent().parent().siblings().find('.fade-body').hide();
