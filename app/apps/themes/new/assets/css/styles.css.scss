@@ -2795,7 +2795,9 @@ $minTablet: 767px;
 		}
 	}
 }
-
+.tabs__caption a {
+  color: whitesmoke;
+}
 .tabs__caption {
 	display: flex;
 	margin-left: -30px;
