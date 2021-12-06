@@ -175,7 +175,7 @@ class AskodService
 
   def prepare_title(card)
     doc_date = begin
-      card['RegDate'].to_time.strftime('%d.%m.%Y')
+      card['ReceiptDate'].to_time.strftime('%d.%m.%Y')
     rescue StandardError
       ''
     end
