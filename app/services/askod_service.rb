@@ -185,7 +185,7 @@ class AskodService
       ''
     end
     # change document title depending on its 'kind'
-    if card['Kind'].start_with?('Проєкт рішення', 'Проект рішення')
+    if card['Kind'].start_with?('Проєкт рішення', 'Проект рішення', 'Доповнення до проєкту рішення сесії')
       "#{normalize_text(card['Content'].to_s)}"
     else
       "#{doc_idx} від #{doc_date} #{normalize_text(card['Content'].to_s)}"
