@@ -103,9 +103,9 @@ class AskodService
   def retrieve_category_ids(category_names)
     category_ids = []
     # make an array, map through and strip ends, remove empty values from array
-    names_array = category_names.split(",").map(&:strip).reject!(&:empty?)
+    names_array = category_names.split(",").map(&:strip).reject(&:empty?)
     names_array.each { |name|
-      category_record = CamaleonCms::DocCategory.find_by(name: name)
+      category_record = CamaleonCms::DocCategory.where(name: name).first_or_create(name: name)
       if category_record.present?
         # if category id not already in 'category_ids' array, add it to it
         if category_ids.exclude?(category_record.id)

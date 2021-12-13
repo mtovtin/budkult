@@ -14,7 +14,7 @@ class CamaleonCms::Admin::DocsController < CamaleonCms::AdminController
 		if params[:date].present?
 			start_date = end_date = params[:date].to_s
 			start_date, end_date = helpers.get_date_range(start_date, end_date)
-			@docs = @docs.having_created_at_between(start_date, end_date)
+			@docs = @docs.by_doc_created_at_between(start_date, end_date)
 		end
 		if params[:tag]
 			@docs.tagged_with(params[:tag])
@@ -32,7 +32,7 @@ class CamaleonCms::Admin::DocsController < CamaleonCms::AdminController
 	def create
 		@doc = CamaleonCms::Doc.new(doc_params)
 		@doc.user = current_user
-		
+
 		if @doc.save
 			flash[:notice] = "Створено"
 			redirect_to action: :index
@@ -151,6 +151,19 @@ class CamaleonCms::Admin::DocsController < CamaleonCms::AdminController
 				'<b>Документів не було створено. Можливо ви намагаєтесь імпортувати документи, що вже існують</b>'
 		end
 		redirect_to controller: 'camaleon_cms/admin/docs', action: :index
+	end
+
+	def destroy_multiple
+		result = CamaleonCms::Doc.destroy(params[:document_ids]) if params[:document_ids].present?
+		if result.present?
+			quantity = result.size
+			postfix = quantity >= 5 ? 'ів' : quantity > 1 ? 'а' : ''
+			flash[:notice] = "Видалено #{result.size} документ#{postfix}"
+		end
+		respond_to do |format|
+			format.html { redirect_to request.referer ||= cama_cama_admin_docs_path }
+			format.json { head :no_content }
+		end
 	end
 
 	private
