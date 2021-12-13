@@ -9,7 +9,6 @@ Rails.application.routes.draw do
 				get 'requests/:id' => 'requests#show'
 				get 'doc_tags' => 'docs#doc_tag_list'
 				get 'doc_cats' => 'docs#doc_cat_list'
-				get 'category_autocompletion' => 'docs#doc_cat_autocomplete'
 				get 'doc_spcats' => 'docs#doc_spcat'
 				get 'recent_tags' => 'notes#recent_tags'
 				get 'note_tags' => 'notes#note_tag_list'
@@ -19,8 +18,14 @@ Rails.application.routes.draw do
 				get 'docs/tag/:id' => 'docs#tax_tag_docs'
 				post 'import/' => 'docs#import'
 				scope :docs do
+					get 'category_autocompletion' => 'docs#doc_cat_autocomplete'
 					resources :doc_categories
 					resources :doc_tags
+					resources :docs do
+						collection do
+							delete 'destroy_multiple'
+						end
+					end
 				end
 				scope :notes do
 					resources :note_categories

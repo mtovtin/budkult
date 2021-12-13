@@ -16,6 +16,7 @@ Rails.application.config.assets.precompile += %w( daterangepicker_initializer )
 Rails.application.config.assets.precompile += %w( document_search_ajax )
 Rails.application.config.assets.precompile += %w( import_form.css )
 Rails.application.config.assets.precompile += %w( import_form.js )
+Rails.application.config.assets.precompile += %w( adm_docs_grid.js )
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
