@@ -54,6 +54,6 @@
   </table>
 <% end %>
 <% if @docs.empty?%>
-  <%= content_tag("div", raw(ct('no_documents_found', default: '<b>Йой!</b> На жаль, документів за данними критеріями не знайдено... </br>')), class: "alert alert-warning") %>
+  <%= content_tag("div", raw(ct('no_documents_found', default: '<b>Йой!</b> ничим не найшов... </br>')), class: "alert alert-warning") %>
   <%= link_to 'Назад', url_for(cama_cama_admin_docs_path), :class => 'btn btn-primary btn-sm' %>
 <% end %>
