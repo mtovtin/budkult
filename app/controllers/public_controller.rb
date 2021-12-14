@@ -67,18 +67,18 @@ class PublicController < CamaleonCms::FrontendController
     send_data(file_binary, filename: file_name, type: doc_type, disposition: 'inline')
   end
 
-  # get the file_id and the file_name from encrypted cookie
+  # find the document by its title and get the file_id and the file_name
   # make a call to the api-service to retrieve the binary data
   def download
-    file_id = cookies.encrypted[:file_id]
-    file_name = cookies.encrypted[:file_name]
-
+    file_id, file_name = CamaleonCms::Doc.where(slug: params[:title]).pluck(:file_counter, :file_name).first
+    # missing attributes
     if !file_id.present? || !file_name.present?
       public_logger.error("#{request.referer} - File not found")
-      return redirect_back fallback_location: documents_path, notice: "File not found"
+      return redirect_back fallback_location: documents_path, notice: 'File not found'
     end
     file_binary = @service.get_binary_data_of_the_file(file_id)
-    if !file_binary.present?
+    # missing file binary
+    unless file_binary.present?
       public_logger.error("filename: #{file_name}, file id: #{file_id} - file binary missing")
       return redirect_back fallback_location: documents_path
     end

@@ -115,8 +115,6 @@ class CamaleonCms::FrontendController < CamaleonCms::CamaleonController
 
 	def show_docs_items
 		@post = CamaleonCms::Doc.find_by(slug: params[:title])
-		cookies.encrypted[:file_id] = @post.file_counter
-		cookies.encrypted[:file_name] = @post.file_name
 	end
 
 	def save_request
