@@ -41,7 +41,7 @@ class PublicController < CamaleonCms::FrontendController
     # show only published
     @docs = @docs.published
     # select only the necessary columns (pluck breaks pagination)
-    @docs = @docs.select(:title, :doc_index, :mce_doc_number, :kind, :created_at, :slug)
+    @docs = @docs.select(:title, :doc_index, :mce_doc_number, :kind, :created_at, :slug, :rada_docs_url, :doc_stamp)
     # add pagination
     @docs = @docs.paginate(page: params[:page], per_page: current_site.front_per_page)
     render partial: 'public/partials/document_search_grid', locals: { items: @docs }
