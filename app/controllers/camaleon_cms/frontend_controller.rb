@@ -31,7 +31,7 @@ class CamaleonCms::FrontendController < CamaleonCms::CamaleonController
 		begin
 			@posts = CamaleonCms::Note.published.tagged_with(params[:title]).paginate(:page => params[:page], :per_page => current_site.front_per_page)
 			@post_tag = CamaleonCms::NoteTag.find_by(slug: params[:title])
-		rescue 
+		rescue
 			return page_not_found
 		end
 	end
@@ -40,7 +40,7 @@ class CamaleonCms::FrontendController < CamaleonCms::CamaleonController
 		begin
 			@posts = CamaleonCms::Note.published.catted_with(params[:title]).paginate(:page => params[:page], :per_page => current_site.front_per_page)
 			@category = CamaleonCms::NoteCategory.find_by(slug: params[:title])
-		rescue 
+		rescue
 			return page_not_found
 		end
 	end
@@ -108,7 +108,7 @@ class CamaleonCms::FrontendController < CamaleonCms::CamaleonController
 					@docs = CamaleonCms::Doc.tagged_with(params[:tag]).paginate(:page => params[:page], :per_page => current_site.front_per_page)
 				end
 			end
-		rescue 
+		rescue
 			return page_not_found
 		end
 	end
@@ -128,7 +128,7 @@ class CamaleonCms::FrontendController < CamaleonCms::CamaleonController
 
 	def request_params
 		parameters = params.require(:request)
-		parameters.permit(:name, :content, :address, :email)  
+		parameters.permit(:name, :content, :address, :email)
 	end
 
 	def category
@@ -204,7 +204,7 @@ class CamaleonCms::FrontendController < CamaleonCms::CamaleonController
 
 		@posts = @posts.paginate(:page => params[:page], :per_page => current_site.front_per_page)
 		@pages = @pages.paginate(:page => params[:page], :per_page => current_site.front_per_page)
-		
+
 		render r[:render], (!r[:layout].nil? ? {layout: r[:layout]} : {})
 	end
 
@@ -228,12 +228,12 @@ class CamaleonCms::FrontendController < CamaleonCms::CamaleonController
 	end
 
 	def post_archive_router
-		date = Date.parse("#{params[:date]}/01")
-		year = date.strftime("%Y")
-		month = date.strftime("%m")
-		if params[:date]
-			redirect_to :action => "post_archive_month", :year => year, :month => month
+		year, month, day = helpers.get_split_date_from_params
+		# if date in params only consists of year and month
+		if (%r{^(\d{2}/\d{4}|\d{4}/\d{2})$}).match?(params[:date])
+			return redirect_to action: 'post_archive_month', year: year, month: month
 		end
+		redirect_to action: 'post_archive', year: year, month: month, day: day
 	end
 
 	def post_archive
@@ -313,7 +313,7 @@ class CamaleonCms::FrontendController < CamaleonCms::CamaleonController
 			@post = current_site.the_posts.where(id: post_or_slug_or_id).first
 		else
 			@post = post_or_slug_or_id
-		end		
+		end
 
 		if @post.class.name != "CamaleonCms::Note"
 			@post = @post.try(:decorate)
@@ -353,7 +353,7 @@ class CamaleonCms::FrontendController < CamaleonCms::CamaleonController
 				hooks_run("on_render_post", r) if from_url
 
 				if status.present?
-					render r[:render], (!r[:layout].nil? ? {layout: r[:layout], status: status} : {status: status})  
+					render r[:render], (!r[:layout].nil? ? {layout: r[:layout], status: status} : {status: status})
 				else
 					render r[:render], (!r[:layout].nil? ? {layout: r[:layout]} : {})
 				end
