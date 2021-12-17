@@ -55,5 +55,23 @@ module ApplicationHelper
 				end
 			[start_date, end_date]
 		end
+
+		# Returns an array with year month day as values.
+		# @return [Array<String>]
+		def get_split_date_from_params
+			# if date param is missing set today's date
+			if !params.key?(:date) || !params[:date].present?
+				year, month, day = Date.today.to_s.split('-')
+			else
+				# catch exceptions
+				begin
+					year, month, day = Date.parse(params[:date]).to_s.split('-')
+				rescue StandardError
+					year, month, day = Date.today.to_s.split('-')
+				end
+			end
+			[year, month, day]
+		end
+
 	end
 end
