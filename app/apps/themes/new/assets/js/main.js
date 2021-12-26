@@ -5,6 +5,8 @@
 //= require datepicker
 //= require jquery.mmenu.all
 
+document.addEventListener('touchstart', onTouchStart, {passive: true});
+
 $.extend({
   replaceTag: function (currentElem, newTagObj, keepProps) {
     var $currentElem = $(currentElem);
