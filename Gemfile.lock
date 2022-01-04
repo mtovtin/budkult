@@ -219,6 +219,9 @@ GEM
     image_optim_pack (0.8.0.20211116-x86_64-darwin)
       fspath (>= 2.1, < 4)
       image_optim (~> 0.19)
+    image_optim_pack (0.8.0.20211116-x86_64-linux)
+      fspath (>= 2.1, < 4)
+      image_optim (~> 0.19)
     image_size (3.0.1)
     in_threads (1.5.4)
     io-like (0.3.1)
@@ -258,6 +261,8 @@ GEM
     net-ssh (6.1.0)
     nio4r (2.5.8)
     nokogiri (1.12.5-x86_64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.12.5-x86_64-linux)
       racc (~> 1.4)
     non-digest-assets (2.1.0)
       activesupport (>= 5.2, < 7.1)
@@ -382,6 +387,7 @@ GEM
 
 PLATFORMS
   x86_64-darwin-20
+  x86_64-linux
 
 DEPENDENCIES
   annotate
