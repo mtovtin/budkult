@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
-ruby '2.5.2'
+ruby '2.4.0'
 
 gem 'babosa'
 gem 'bootsnap', '>= 1.1.0', require: false
@@ -12,7 +12,6 @@ gem 'momentjs-rails'
 gem 'bootstrap-daterangepicker-rails'
 gem 'draper', '~> 3'
 gem 'flexslider'
-gem 'dalli'
 gem 'friendly_id', '~> 5.2.4'
 gem 'jbuilder', '~> 2.5'
 gem 'magnific-popup-rails', '~> 1.1.0'
@@ -47,7 +46,6 @@ group :development do
   gem 'capistrano-passenger', '~> 0.2.0'
   gem 'capistrano-rails', '~> 1.1.3'
   gem 'capistrano-rvm'
-  gem "ed25519"
   gem "bcrypt_pbkdf"
   end
 

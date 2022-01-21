@@ -16,7 +16,6 @@ Rails.application.configure do
   config.action_controller.perform_caching = true
   config.cache_store = :mem_cache_store
   #config.cache_store = :memory_store, { size: 64.megabytes }
-  config.assets.digest = true
   # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
   # or in config/master.key. This key is used to decrypt credentials (and other encrypted files).
   # config.require_master_key = true
