@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.0'
-
+gem 'dalli'
 gem 'babosa'
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'camaleon_cms',  '>= 2.5.0'
+gem "camaleon_cms"
 gem 'camaleon_image_optimizer'
 gem 'camaleon_post_created_at', github: 'owen2345/camaleon_post_created_at'
 gem 'coffee-rails', '~> 4.2'
