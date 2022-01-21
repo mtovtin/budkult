@@ -26,4 +26,4 @@ require "whenever/capistrano"
 set :whenever_roles, -> { [:app, :web] }
 set :whenever_environment, fetch(:stage)
 set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
-set :rvm_ruby_version, '2.6.0'
+set :rvm_ruby_version, '2.5.2'
