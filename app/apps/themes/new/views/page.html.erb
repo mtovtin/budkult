@@ -1,3 +1,8 @@
+<% if %w[mincifri-zaproshue-county-robotu-cnap].include? @post.slug %>
+  <script>
+    console.log('TEST')
+  </script>
+<% end %>
 <% if %w[about-city].include? @post.slug %>
 <%= javascript_include_tag theme_asset_path("js/slider.js") %>
 <% end%>
