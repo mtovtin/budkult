@@ -1,3 +1,20 @@
+<% if %w[мінцифри-запрошує-оцінити-роботу-цнап].include? @post.slug %>
+  <%= stylesheet_link_tag theme_asset_path("css/video-js.css") %>
+  <%= javascript_include_tag theme_asset_path("js/video.min.js") %>
+  <%= javascript_include_tag theme_asset_path("js/video-youtube.min.js") %>
+  <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          var videosTags = document.getElementsByTagName('video');
+          for (var i = 0; i < videosTags.length; i++) {
+              var video = videosTags[i];
+              video.classList.add("video-js");
+              video.classList.add("vjs-default-skin");
+              var player = videojs(video);
+
+          }
+      });
+  </script>
+<% end%>
 <div class="content-prewrap">
   <div class="row">
     <div class="col-md-8 col-sm-8 post-view">
