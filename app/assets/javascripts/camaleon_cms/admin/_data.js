@@ -2,6 +2,8 @@ function cama_get_tinymce_settings(settings){
   if(!settings) settings = {};
   var def = {
     selector: ".tinymce_textarea",
+    theme: "modern",
+    skin: "lightgray",
     plugins: "advlist autolink lists link image charmap print preview hr anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking save table directionality emoticons template paste textcolor colorpicker textpattern filemanager advcode codemagic",
     menubar: "edit insert view format table tools",
     image_advtab: true,
