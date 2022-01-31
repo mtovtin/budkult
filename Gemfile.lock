@@ -141,7 +141,7 @@ GEM
       image_optim (~> 0.26)
       image_optim_pack (~> 0.5)
     cancancan (3.3.0)
-    capistrano (3.16.0)
+    capistrano (3.11.2)
       airbrussh (>= 1.0.0)
       i18n
       rake (>= 10.0.0)
@@ -392,7 +392,7 @@ DEPENDENCIES
   camaleon_cms
   camaleon_image_optimizer
   camaleon_post_created_at!
-  capistrano (~> 3.7, >= 3.7.1)
+  capistrano (~> 3.11.0)
   capistrano-bundler (~> 1.2)
   capistrano-passenger (~> 0.2.0)
   capistrano-rails (~> 1.1.3)
