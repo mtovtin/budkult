@@ -1,4 +1,4 @@
-
+lock "~> 3.11.0"
 
 set :application, 'Rada-uzhgorod'
 set :repo_url, 'ssh://mrmiko2@bitbucket.org/mrmiko2/rada-copy.git'
