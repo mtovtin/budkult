@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
-ruby '2.5.2'
-gem 'dalli'
+ruby '2.4.0'
+
 gem 'babosa'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem "camaleon_cms"
