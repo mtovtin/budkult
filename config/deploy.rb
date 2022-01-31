@@ -1,7 +1,7 @@
 lock "~> 3.11.0"
 
 set :application, 'Rada-uzhgorod'
-set :repo_url, 'ssh://mrmiko2@bitbucket.org/mrmiko2/rada-copy.git'
+set :repo_url, 'git@bitbucket.org:mrmiko2/rada-copy.git'
 set :user, 'deploy'
 set :deploy_to, '/home/deploy/rada'
 
