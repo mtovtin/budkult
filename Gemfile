@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
-ruby '2.4.0'
+ruby '2.5.2'
 gem 'dalli'
 gem 'babosa'
 gem 'bootsnap', '>= 1.1.0', require: false
@@ -46,7 +46,7 @@ group :development do
   gem 'capistrano-passenger', '~> 0.2.0'
   gem 'capistrano-rails', '~> 1.1.3'
   gem 'capistrano-rvm'
-
+  gem "bcrypt_pbkdf"
   end
 
 group :test do
