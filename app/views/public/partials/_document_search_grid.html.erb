@@ -5,14 +5,14 @@
       <% @docs.order("created_at desc").each do |doc| %>
         <div class="post-listing-item">
           <h3 class="post-listing-item-title"><a href="/rada_docs/show/<%= doc.slug %>"><%== doc.title %></a></h3>
-          <p class="post-listing-item-date">
-            <%= l(doc.created_at, format: "%B %d, %Y") %>
+          <div class="docs-content-bottom">
+          <p class="docs-pubdate">Опубліковано: <%= l(doc.created_at, format: "%d.%m.%Y") %></p>
             <% if doc.doc_stamp == 'personal_data' %>
               <%= button_tag 'Файл недоступний для завантаження', class: 'btn btn-sm' %>
             <% else %>
-                <%= link_to 'Завантажити', doc.rada_docs_url.present? ? doc.rada_docs_url : download_file_path(:title => doc.slug), { :remote => true, class: 'btn btn-sm', :onclick => "", id: 'docs-download-btn', target: '_blank'}  %>
+                <%= link_to 'Завантажити', doc.rada_docs_url.present? ? doc.rada_docs_url : download_file_path(:title => doc.slug), { :remote => true, class: 'docs-dl-link', :onclick => "", id: 'docs-download-btn', target: '_blank'}  %>
             <% end %>
-          </p>
+            </div>
         </div>
       <% end %>
       <%= raw cama_do_pagination @docs %>
