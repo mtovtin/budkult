@@ -19,9 +19,10 @@
 		<div class="container">
 			<%= yield %>
 		</div>
+		<%= render "partials/chat" %>
 	</main>
 	<%= render "layouts/footer" %>
-	
+
 	<%= javascript_include_tag theme_asset_path("js/bvi.js") %>
 	<%= javascript_include_tag theme_asset_path("js/js.cookie.js") %>
 	<%= javascript_include_tag theme_asset_path("js/jquery.flipster.min.js") %>

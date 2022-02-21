@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
- 	post '/filter' => 'public#filter'
+  post '/chat' => 'chat#chat'
+  get '/chat_cfg' => 'chat#chat_config'
+	post '/filter' => 'public#filter'
 	get '/documents' => 'public#index'
 	get '/download_file' => 'public#download'
 	scope PluginRoutes.system_info['relative_url_root'], as: 'cama' do

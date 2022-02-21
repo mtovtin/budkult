@@ -13,7 +13,7 @@ function cama_get_tinymce_settings(settings){
     content_css: tinymce_global_settings["custom_css"].join(","),
     convert_urls: false,
     extended_valid_elements: 'i[*],div[*],p[*],li[*],a[*],ol[*],ul[*],span[*]',
-    toolbar: "bold italic | alignleft aligncenter alignright alignjustify | fontselect fontsizeselect | bullist numlist | outdent indent | undo redo | link unlink image media | forecolor backcolor | styleselect customInsertSlider customInsertAccordion customInsertTabs customInsertTabs1 customInsertDocs customInsertNotes codemagic "+tinymce_global_settings["custom_toolbar"].join(","),
+    toolbar: "bold italic | alignleft aligncenter alignright alignjustify | fontselect fontsizeselect | bullist numlist | outdent indent | undo redo | link unlink image media | forecolor backcolor | styleselect customInsertSlider customInsertAccordion customInsertTabs customInsertTabs1 customInsertDocs customInsertNotes customInsertFrame codemagic "+tinymce_global_settings["custom_toolbar"].join(","),
     image_caption: true,
     language: CURRENT_LOCALE,
     relative_urls: false,
@@ -167,6 +167,21 @@ function cama_get_tinymce_settings(settings){
               var cats = e.data.my_slider_cats;
               var tags = e.data.my_slider_tags;
               editor.insertContent('<p>[rada_docs docs="' + docs + '" cats="' + cats + '" tags="' + tags + '"]</p>');
+            }
+          });
+        }
+      }),
+      editor.addButton('customInsertFrame', {
+        text: 'Фрейм',
+        onClick: function () {
+          editor.windowManager.open({
+            title: 'Посилання',
+            body: [
+            {type: 'textbox', name: 'my_frame_url', label: 'Посилання'},
+            ],
+            onsubmit: function(e) {
+              var url = e.data.my_frame_url;
+              editor.insertContent('<iframe style="border: none; width: 100%; height: 1050px;" src=' + url + '></iframe>');
             }
           });
         }
