@@ -56,7 +56,7 @@ class ChatController < CamaleonCms::FrontendController
         "8": { "content": "Можливо Вас цікавить?", "human": [8.1, 8.2, 6] },
         "8.1": { "content": "На сайті Ужгородської міської ради у розділі Міста-побратими <a href=\"https://rada-uzhgorod.gov.ua/mista-pobratymy\" target=\"_blank\">за цим посиланням</a>", "human": [6] },
         "8.2": { "content": "На сайті Ужгородської міської ради у розділі Транскордонне співробітництво 
-        <a href=\"https://rada-uzhgorod.gov.ua/transkordonna-spivpratsya\" target=\"_blank\">за цим посиланням</a>", "human": [6] },
+        <a href=\"https://rada-uzhgorod.gov.ua/transkordonna-spivpratsya\" target=\"_blank\">за цим посиланням.</a>", "human": [6] },
         "9": { "content": "Можливо Вас цікавить?", "human": [9.1, 9.2, 9.3, 9.4, 9.5, 9.6, 9.7, 9.8, 9.9, 9.10, 9.11, 9.12, 9.13, 9.14, 9.15, 9.16, 9.17, 6] },
         "9.1": { "content": "Форма повідомлення про початок виконання будівельних робіт, <br/> порядок його подання, визначаються <br/>
               <a href=\"https://zakon.rada.gov.ua/laws/show/466-2011-%D0%BF#Text\" target=\"_blank\">Постановою КМ України №466 13.04.2011 р.</a> <br/> 
