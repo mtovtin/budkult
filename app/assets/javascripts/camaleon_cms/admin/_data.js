@@ -172,7 +172,7 @@ function cama_get_tinymce_settings(settings){
         }
       }),
       editor.addButton('customInsertFrame', {
-        text: 'Фрейм',
+        text: 'Фрейм pdf',
         onClick: function () {
           editor.windowManager.open({
             title: 'Посилання',
