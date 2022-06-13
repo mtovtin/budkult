@@ -18,7 +18,7 @@ class PublicController < CamaleonCms::FrontendController
     @title = current_site.the_title.sub! 'сайт', 'RSS'
   
     @notes = CamaleonCms::Note
-              .catted_with('uncategorized')
+              .catted_with('ukrnet')
               .published
               .select(:id, :title, :slug, :created_at, :updated_at, :content, :post_imported_thumb)
               .order("created_at desc")
