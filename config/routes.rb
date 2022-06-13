@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 	post '/filter' => 'public#filter'
 	get '/documents' => 'public#index'
 	get '/download_file' => 'public#download'
+	get 'feed' => 'public#feed', :as => :feed, :defaults => { :format => 'rss' }
 	scope PluginRoutes.system_info['relative_url_root'], as: 'cama' do
 		scope module: 'camaleon_cms', as: 'cama' do
 			namespace :admin, path: PluginRoutes.system_info["admin_path_name"] do

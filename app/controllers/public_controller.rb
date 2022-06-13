@@ -14,6 +14,22 @@ class PublicController < CamaleonCms::FrontendController
     render template: 'public/search'
   end
 
+  def feed
+    @title = current_site.the_title.sub! 'сайт', 'RSS'
+  
+    @notes = CamaleonCms::Note
+              .catted_with('uncategorized')
+              .published
+              .select(:id, :title, :slug, :created_at, :updated_at, :content, :post_imported_thumb)
+              .order("created_at desc")
+              .paginate(:page => params[:page], :per_page => 50)
+  
+    respond_to do |format|
+      format.html
+      format.rss { render :layout => false }
+    end
+  end
+
   # filter method that's being called by ajax when changing filters on '/documents' page
   def filter
     require 'will_paginate/array'
