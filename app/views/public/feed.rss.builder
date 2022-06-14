@@ -13,7 +13,7 @@ xml.rss :version => '2.0', 'xmlns:atom' => 'http://www.w3.org/2005/Atom' do
         xml.link "#{current_site.the_url}#{note.slug}"
         xml.pubDate note.created_at.to_s(:rfc822)
         xml.guid "#{current_site.the_url}#{note.slug}"
-        xml.description note.content
+        xml.description note.content + "#{note.post_imported_thumb.present? ? '<img src="' + current_site.the_url + note.post_imported_thumb + '"  + >' : ''}"
       end
     end
   end
