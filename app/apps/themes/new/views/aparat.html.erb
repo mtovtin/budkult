@@ -1,4 +1,4 @@
-<div class="content-prewrap">
+<div style="margin-bottom:40px" class="content-prewrap">
 	<ol class="breadcrumb" style="margin-left: 0;">
 		<li><a href="/">На головну</a></li>
 		<li><%== truncate(sanitize(@post.the_title), length: 80) %></li>
@@ -14,30 +14,7 @@
 							<% if @post.get_field('aparat-posada') %>
 							<p class="aparat-seat"><%== @post.get_field('aparat-posada') %></p>
 							<% end %>
-							<div class="aparat-schedule">
-								<div class="schedule-head">
-									<p>Прийом громадян:</p>
-								</div>
-								<div class="schedule-footer">
-									<ul class="aparat_mr-schedule-list">
-										<% if @post.get_field('aparat-adresa') %>
-										<li><i class="fa fa-map-marker"></i><%== @post.get_field('aparat-adresa') %></li>
-										<% end %>
-										<% if @post.get_field('aparat-telefon') %>
-										<li><i class="fa fa-phone"></i><%== @post.get_field('aparat-telefon') %></li>
-										<% end %>
-										<% if @post.get_field('aparat-email') %>
-										<li><i class="fa fa-fax"></i><%== @post.get_field('aparat-email') %></li>
-										<% end %>
-										<% if @post.get_field('aparat-dni-priyomu') %>
-										<li><i class="fa fa-calendar-o"></i><%== @post.get_field('aparat-dni-priyomu') %></li>
-										<% end %>
-										<% if @post.get_field('aparat-chas-priyomu') %>
-										<li><i class="fa fa-clock-o"></i><%== @post.get_field('aparat-chas-priyomu') %></li>
-										<% end %>
-									</ul>
-								</div>
-							</div>
+						
 							<% if @post.get_field('aparat-dodatkovo') %>
 							<div class="aparat-schedule">
 								<div class="schedule-head">
@@ -55,7 +32,7 @@
 						<div class="col-md-8 col-sm-8 aparat-inner-content">
 							<ul class="nav nav-tabs">
 								<li class="active"><a data-toggle="tab" href="#biography"><i class="fa fa-book"></i> Біографія</a></li>
-								<li><a data-toggle="tab" href="#aparat_req"><i class="fa fa-sign-out"></i> Електронне звернення</a></li>
+
 							</ul>
 							<div class="tab-content">
 								<%= render :partial => "camaleon_cms/flash_messages", locals:{ flash: (flash[:contact_form] || {}).with_indifferent_access } %>

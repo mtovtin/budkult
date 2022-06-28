@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
-ruby '2.4.0'
+ruby '2.5.1'
 gem 'dalli', '~> 2.7', '>= 2.7.11'
 gem 'babosa'
 gem 'bootsnap', '>= 1.1.0', require: false
@@ -18,7 +18,7 @@ gem 'magnific-popup-rails', '~> 1.1.0'
 gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: '01f92d86d15d85cfd0f20dabd025dcbd36a8a60f'
 gem 'mmenu-rails'
 gem 'nokogiri'
-gem 'pg', '>= 0.18', '< 2.0'
+gem 'pg', '0.21.0'
 gem 'puma', '~> 3.11'
 gem 'responders'
 gem 'rails', '~> 5.2.2'

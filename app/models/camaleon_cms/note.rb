@@ -20,9 +20,9 @@ class CamaleonCms::Note < ActiveRecord::Base
 	scope :published, -> { where(status: 'published') }
 	scope :scheduled, -> { where(status: 'scheduled') }
 
-	def self.tagged_with(slug)
-		CamaleonCms::NoteTag.find_by!(slug: slug).notes.published
-	end
+	# def self.tagged_with(slug)
+	# 	CamaleonCms::NoteTag.find_by!(slug: slug).notes.published
+	# end
 
 	def self.catted_with(slug)
 		CamaleonCms::NoteCategory.find_by!(slug: slug).notes.published

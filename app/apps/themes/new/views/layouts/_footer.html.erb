@@ -1,62 +1,20 @@
-<footer>
-	<div class="container">
-		<div class="upper-footer">
-			<div class="row">
-				<div class="col-md-4 col-sm-4"><img class="footer-logo" src="<%= current_site.the_logo %>" alt="logo"></div>
-				<div class="col-md-4 col-sm-4">
-					<div class="footer-contacts">
-						<%== current_theme.the_field('footer-contacts') %>
-						
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-4">
-					<div class="footer-copy">
-						<%== current_theme.the_field('footer-rights') %>
-					</div>
-				</div>
-			</div> 
-		</div>
-		<div class="bottom-footer">
-			<p><%== current_theme.the_field('footer-development') %></p>
-			<p class="suport-and-dev">Розробка <a href="https://www.keepindata.com/" target="_blank"><img style="width:75px; height:30px;" src="<%= theme_asset_url("images/template/keepin-logo.png") %>" alt="keepin"></a></p>
-		</div>
+<footer style="position: relative; bottom: 0; width: 100%">
+
+
+
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="topnav" id="myTopnav">
+<div style="display: flex; justify-content: space-between;padding-top: 30px; margin-left: 20px">
+	<img width="80px"; src="<%= current_site.the_logo %>" alt="logo">
+	<div>
+	<%== current_theme.the_field('footer-contacts') %>
 	</div>
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-49874554-11"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-		gtag('config', 'UA-49874554-11');
-	</script>
+	<div>
+		<%== current_theme.the_field('footer-rights') %>
+	</div>
+	
+</div>
+</div>
 </footer>
-<nav id="my_menu">
-	<%= raw draw_menu({menu_slug: 'main_menu', container_class: '', sub_class: '',  item_class: '', link_class: '', link_class_parent: ''}) %>
-</nav>
-<script>
-	var ready;
-	ready = function() {
-		$('html').removeAttr('class');
-		$.mmenu.glbl = false;
-		$("#my_menu").mmenu({
-			navbar: {
-				title: "Меню",
-			},
-			footer: {
-				add: true,
-				content: `
-				<%= form_tag(cama_search_path, :method => "get") do %>
-				<div class="input-group-btn">
-				<button type="submit" class="btn btn-default"><a href=#>Закрити</a></button>
-				</div>
-				
-				<% end %>
-				`
-			},
-			extensions: ["pageshadow"],
-			backButton: {
-				close: true
-			}
-		});
-	};
-	$(document).ready(ready);
-</script>

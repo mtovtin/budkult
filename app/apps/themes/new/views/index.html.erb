@@ -37,35 +37,9 @@
 	</div>
 </div>
 <div class="special-marged-col">
-	<div id="carousel-posts" class="carousel slide" data-ride="carousel" data-interval="false">
-		<div class="carousel-inner">
-			<% posts = CamaleonCms::Note.tagged_with('foto') %>
-			<% alt_posts = CamaleonCms::Note.tagged_with('vazhlyvo') %>
-			<% posts.merge!(alt_posts) %>
-			<% posts.order(created_at: :desc).limit(5).each do |post| %>
-			<div class="item">
-				<a href="<%= post_url(post) %>" class="first-posts-item">
-					<% if post.post_imported_thumb && post.post_imported_thumb.length > 0 %>
-					<img src="<%= post.post_imported_thumb %>" alt="<%== post.title %>">
-					<% else %>
-					<img src="<%= theme_asset_url("images/template/default-photo.jpg") %>" alt="<%== post.title %>">
-					<% end %>
-					<div class="first-posts-content">
-						<h3 class="first-posts-title"><%== post.title %></h3>
-					</div>
-				</a>
-			</div>
-			<% end %>
-		</div>
-		<a class="left carousel-control" href="#carousel-posts" data-slide="prev">
-			<span class="glyphicon glyphicon-chevron-left fa fa-angle-left"></span>
-		</a>
-		<a class="right carousel-control" href="#carousel-posts" data-slide="next">
-			<span class="glyphicon glyphicon-chevron-left fa fa-angle-right"></span>
-		</a>
-	</div>
+
 	<div class="posts-listing-row">
-		<% posts = CamaleonCms::Note.catted_with('uncategorized') %>
+
 		<% posts.order(created_at: :desc).limit(13).each do |post| %>
 		<div class="post-listing-item">
 			<h3 class="post-listing-item-title"><a href="<%= post_url(post) %>"><%== post.title %></a></h3>
@@ -75,39 +49,16 @@
 		<a href="/category/uncategorized" class="all-announcements-btn">Більше...</a>
 	</div>
 </div>
-<div class="right-wited-col">
-	<div class="sidebar-contact-top-info">
-		<%== current_theme.the_field('kontaktna-informatsiya-top') %>
-	</div>
-	<div class="sidebar-contact-info">
-		<%== current_theme.the_field('kontaktna-informatsiya') %>
-	</div>
-	<div class="announcements-block">
-		<% category = CamaleonCms::NoteCategory.find_by(slug: 'anonsy') %>
-		<% if category %>
-		<p class="cat-naming"><%= category.name %></p>
-		<% category.notes.published.order(created_at: :desc).limit(4).each do |post| %>
-		<div class="post-listing-item">
-			<h3 class="post-listing-item-title"><a href="<%= post_url(post) %>"><%== post.title %></a></h3>
-			<p class="post-listing-item-date"><%= l(post.created_at, format: "%B %d, %Y") %></p>
-		</div>
-		<% end %>
-		<a href="/anonsu_novun" class="all-announcements-btn">Всі анонси</a>
-		<% end %>
-	</div>
+
+
+
+
 	<table style="border-collapse: collapse; width: 100%;">
-<tbody background="#f8f8f8">
-<td colspan="2" style="width: 100%; padding: 12px 1px 0px; border-style: hidden; text-align: center;">
-<p class="cat-naming-blok">Порядки денні</p></td>
-<tr>
-<td style="width: 50%; border-style: hidden; text-align: center;"><a class="cat-naming-tab" href="#auzo00rx48r" data-toggle="tab">Виконкому</a></td>
-<td style="width: 50%; border-style: hidden; text-align: center;"><a class="cat-naming-tab" href="#0s190x4ulazd" data-scroll="#scroll-container" data-toggle="tab">Сесії</a></td>
-</tr>
-</tbody>
+
 </table>
 <div class="cstmn-flex-tab-row">
 <div class="vc_tta-tabs vc_tta-tabs-position-left">
-<div class="tab-content-container">
+
 <div class="tab-content" id="scroll-container">
 <div class="tab-pane fade" id="auzo00rx48r" style="border-color: #7d18bd;">
 <div class="announcements-block" style="margin-top: 20px">
@@ -135,11 +86,11 @@
 		<% end %>
 	</div>
 
+
 </div>
 </div>
 </div>
-</div>
-</div>
+
 	<ul class="sidebar-menu-items">
 		<% menu = current_site.nav_menus.find_by_slug('sidebar-right') %>
 		<% if menu %>
@@ -191,7 +142,7 @@
     </li> 
   </ul> 
 </div>
-<div class="main-flexed-row">
+<div class="main-flexed-row" >
 	<div class="left-ico-col">
 <a href="/tag/foto" class="vc_general vc_btn3 vc_btn3-size-lg vc_btn3-style-3d vc_btn3-color-grey"> <span> <img style="width:50px; height:50px;" src="/media/icon/photo.png" /> </span>Фото</a>
 </div>
@@ -202,8 +153,8 @@
 <a href="/tag/podkast" class="vc_general vc_btn3 vc_btn3-size-lg vc_btn3-style-3d vc_btn3-color-grey"> <span> <img style="width:50px; height:50px;" src="/media/icon/podkast.png" /> </span>Подкасти</a>
 	</div>
 </div>
-<div class="regional-sites-pre">
-	<a href="/sayti-oblasnih-centriv" class="regional-sites-pre">
-		<h2>Сайти обласних центрів </h2>
-	</a>
-</div>
+
+
+
+
+
